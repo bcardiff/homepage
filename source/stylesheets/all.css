@@ -58,8 +58,7 @@ a:hover {
 .escritos-list li a > div {
   width: 200px;
   height: 200px;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin: 20px 20px 0 20px;
   overflow: hidden;
 }
 
