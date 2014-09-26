@@ -11,6 +11,8 @@
 # Page options, layouts, aliases and proxies
 ###
 
+activate :directory_indexes
+
 page "/escritos/*"
 
 # Per-page layout changes:
