@@ -1,0 +1,9 @@
+<h1>Escritos</h1>
+
+<p>
+<ul>
+  <% current_resource.children.each do |story| %>
+    <li><a href="<%=story.url%>"><%= story.data.title %></a></li>
+  <% end %>
+</ul>
+</p>
