@@ -1,5 +1,6 @@
 ---
 title: Se puede sin
+date: 2014-01-01
 ---
 Finalmente la encontré. Pero no es una expresión de alegría. Es gratificante, siempre, por simple que sea, entender algo más.
 

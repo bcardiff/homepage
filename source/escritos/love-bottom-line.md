@@ -1,5 +1,6 @@
 ---
 title: Love bottom line
+date: 2014-06-01
 ---
 do what you love
 

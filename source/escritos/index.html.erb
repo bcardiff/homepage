@@ -1,9 +1,23 @@
-<h1>Escritos</h1>
-
+---
+title: Escritos
+---
 <p>
-<ul>
-  <% current_resource.children.each do |story| %>
-    <li><a href="<%=story.url%>"><%= story.data.title %></a></li>
+<ul class="escritos-list">
+  <% current_resource.children.sort_by { |s| s.data.date }.reverse.each do |story| %>
+    <li>
+      <a href="<%=story.url%>">
+        <div>
+          <%= story.data.title %>
+
+          <p>
+            <%= story.render layout: false %>
+          </p>
+
+          <div class="right"></div>
+          <div class="bottom"></div>
+        </div>
+      </a>
+    </li>
   <% end %>
 </ul>
 </p>
