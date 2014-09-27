@@ -14,6 +14,7 @@
 activate :directory_indexes
 
 page "/escritos/*"
+page "/dibujos/*"
 
 # Per-page layout changes:
 #

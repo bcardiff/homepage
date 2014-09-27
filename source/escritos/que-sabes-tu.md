@@ -3,7 +3,7 @@ title: ¿Qué sabes tú?
 date: 2014-09-26
 ---
 
-¿Qué sabes tú del amor?, le dijo el niño al padre. No tiene fansias. No tienen sueños. Debes seguir. No puedes imaginar.
+¿Qué sabes tú del amor?, le dijo el niño al padre. No tiene fantasias. No tienen sueños. Debes seguir. No puedes imaginar.
 
 Lo entenderás cueando seas mayor.
 

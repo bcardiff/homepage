@@ -1,0 +1,24 @@
+---
+title: Dibujos
+---
+<p>
+<ul class="dibujos-list">
+  <% current_resource.children.sort_by { |s| s.data.date }.reverse.each_with_index do |story, index|
+    next if story.ext != '.html' %>
+    <li>
+      <a href="<%=story.url%>">
+        <%= story.data.title %>
+        <img src="/dibujos/<%= story.data.image %>"/>
+<!--         <% delay = 7*(index+1) %>
+        <div style="<%="animation:move #{delay}s ease;-ms-animation:move #{delay}s ease;-webkit-animation:move #{delay}s ease;-0-animation:move #{delay}s ease;-moz-animation:move #{delay}s ease;"%>">
+          <p>
+            <%= story.render layout: false %>
+          </p>
+
+          <div class="bottom"></div>
+        </div> -->
+      </a>
+    </li>
+  <% end %>
+</ul>
+</p>

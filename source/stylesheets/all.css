@@ -90,6 +90,16 @@ a:hover {
   font-size: 0.7em;
 }
 
+.dibujos-list {
+  list-style: none;
+  padding: 0;
+}
+
+.dibujos-list li {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
 
 @-webkit-keyframes move {
   from {
