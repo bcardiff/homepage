@@ -1,5 +1,5 @@
 ---
-title: Panda dancing blues
+title: Panda hug
 image: panda.png
 ---
 

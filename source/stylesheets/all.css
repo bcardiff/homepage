@@ -117,3 +117,7 @@ a:hover {
     -moz-transform: scale(1.0); /* Firefox */
   }
 }
+
+.dibujos img {
+  max-width: 80%;
+}
