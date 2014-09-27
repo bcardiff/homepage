@@ -89,3 +89,21 @@ a:hover {
 .escritos-list p {
   font-size: 0.7em;
 }
+
+
+@-webkit-keyframes move {
+  from {
+    transform: scale(0.9);
+    -ms-transform: scale(0.9); /* IE 9 */
+    -webkit-transform: scale(0.9); /* Safari and Chrome */
+    -o-transform: scale(0.9); /* Opera */
+    -moz-transform: scale(0.9); /* Firefox */
+  }
+  to {
+    transform: scale(1.0);
+    -ms-transform: scale(1.0); /* IE 9 */
+    -webkit-transform: scale(1.0); /* Safari and Chrome */
+    -o-transform: scale(1.0); /* Opera */
+    -moz-transform: scale(1.0); /* Firefox */
+  }
+}
