@@ -96,9 +96,10 @@ a:hover {
 }
 
 .dibujos-list li {
-  width: 100%;
+  width: 40%;
   height: 140px;
   overflow: hidden;
+  float: left;
 }
 
 @-webkit-keyframes move {
@@ -119,5 +120,5 @@ a:hover {
 }
 
 .dibujos img {
-  max-width: 80%;
+  max-width: 100%;
 }
