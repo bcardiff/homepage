@@ -25,7 +25,7 @@ h1::before {
   width: 650px;
 }
 
-p, a {
+.content p, .content a {
   font-family: 'Alegreya', serif;
   font-size: 1.3em;
   line-height: 1.3em;
@@ -120,5 +120,11 @@ a:hover {
 }
 
 .dibujos img {
-  max-width: 100%;
+  width: 100%;
+}
+
+.image-container {
+  width: 100%;
+  height: 140px;
+  display: block;
 }

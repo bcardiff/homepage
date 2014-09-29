@@ -10,7 +10,7 @@
     <title>Dibujos</title>
 
     <link href="/stylesheets/normalize.css" rel="stylesheet" type="text/css" /><link href="/stylesheets/all.css" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/all.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-1.11.1.min.js" type="text/javascript"></script><script src="/javascripts/jquery.transit.js" type="text/javascript"></script><script src="/javascripts/jquery.slideshowify.js" type="text/javascript"></script><script src="/javascripts/all.js" type="text/javascript"></script>
   </head>
 
   <body class="dibujos dibujos dibujos_index" style="margin: 0;">
@@ -18,76 +18,47 @@
       Dibujos
     </h1>
     <div class="content" style="width: 100%;">
-      <p>
+      <script type="text/javascript">
+$(function(){
+  window.setTimeout(
+    function(){
+      var i = 0;
+      $('.image-container').each(function(){
+        var a = $(this);
+        i += 1;
+        parentId = 'ic' + i;
+        a.attr('id', parentId);
+        $('img', a).slideshowify({parentEl: '#' + parentId});
+      });
+    }
+  , 3000);
+});
+</script>
+<p>
 <ul class="dibujos-list">
     <li style="position: relative;">
-      <a href="/dibujos/people/">
-        <img src="/dibujos/people.png" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         
-        <div style="animation:move 21s ease;-ms-animation:move 21s ease;-webkit-animation:move 21s ease;-0-animation:move 21s ease;-moz-animation:move 21s ease;">
-          <p>
-            <p><img alt="" src="/dibujos/people.png" /></p>
-
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="/dibujos/people/" data-img="/dibujos/people.png" class="image-container">
+        <img src="/dibujos/people.png" />
       </a>
     </li>
     <li style="position: relative;">
-      <a href="/dibujos/panda/">
-        <img src="/dibujos/panda.png" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         
-        <div style="animation:move 42s ease;-ms-animation:move 42s ease;-webkit-animation:move 42s ease;-0-animation:move 42s ease;-moz-animation:move 42s ease;">
-          <p>
-            <p><img alt="" src="/dibujos/panda.png" /></p>
-
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="/dibujos/panda/" data-img="/dibujos/panda.png" class="image-container">
+        <img src="/dibujos/panda.png" />
       </a>
     </li>
     <li style="position: relative;">
-      <a href="/dibujos/jazz/">
-        <img src="/dibujos/jazz.png" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         
-        <div style="animation:move 63s ease;-ms-animation:move 63s ease;-webkit-animation:move 63s ease;-0-animation:move 63s ease;-moz-animation:move 63s ease;">
-          <p>
-            <p><img alt="" src="/dibujos/jazz.png" /></p>
-
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="/dibujos/jazz/" data-img="/dibujos/jazz.png" class="image-container">
+        <img src="/dibujos/jazz.png" />
       </a>
     </li>
     <li style="position: relative;">
-      <a href="/dibujos/gato-fiaca/">
-        <img src="/dibujos/gato-fiaca.jpg" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         
-        <div style="animation:move 70s ease;-ms-animation:move 70s ease;-webkit-animation:move 70s ease;-0-animation:move 70s ease;-moz-animation:move 70s ease;">
-          <p>
-            <p><img alt="" src="/dibujos/gato-fiaca.jpg" /></p>
-
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="/dibujos/gato-fiaca/" data-img="/dibujos/gato-fiaca.jpg" class="image-container">
+        <img src="/dibujos/gato-fiaca.jpg" />
       </a>
     </li>
     <li style="position: relative;">
-      <a href="/dibujos/abrazo-corazon/">
-        <img src="/dibujos/abrazo-corazon.png" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         
-        <div style="animation:move 91s ease;-ms-animation:move 91s ease;-webkit-animation:move 91s ease;-0-animation:move 91s ease;-moz-animation:move 91s ease;">
-          <p>
-            <p><img alt="" src="/dibujos/abrazo-corazon.png" /></p>
-
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="/dibujos/abrazo-corazon/" data-img="/dibujos/abrazo-corazon.png" class="image-container">
+        <img src="/dibujos/abrazo-corazon.png" />
       </a>
     </li>
 </ul>
