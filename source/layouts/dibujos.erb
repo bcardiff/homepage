@@ -10,11 +10,14 @@
     <title><%= current_page.data.title || "bcardiff" %></title>
 
     <%= stylesheet_link_tag "normalize", "all" %>
-    <%= javascript_include_tag  "all" %>
+    <%= javascript_include_tag "jquery-1.11.1.min", "jquery.transit", "jquery.slideshowify", "all" %>
   </head>
 
   <body class="dibujos <%= page_classes %>" style="margin: 0;">
     <h1>
+      <% if current_page.data.image %>
+      <a href="/dibujos">Dibujos</a>:
+      <% end %>
       <%= current_page.data.title %>
     </h1>
     <div class="content" style="width: 100%;">

@@ -1,21 +1,29 @@
 ---
 title: Dibujos
 ---
+<script type="text/javascript">
+$(function(){
+  window.setTimeout(
+    function(){
+      var i = 0;
+      $('.image-container').each(function(){
+        var a = $(this);
+        i += 1;
+        parentId = 'ic' + i;
+        a.attr('id', parentId);
+        $('img', a).slideshowify({parentEl: '#' + parentId});
+      });
+    }
+  , 3000);
+});
+</script>
 <p>
 <ul class="dibujos-list">
   <% current_resource.children.sort_by { |s| s.data.date }.reverse.each_with_index do |story, index|
     next if story.ext != '.html' %>
     <li style="position: relative;">
-      <a href="<%=story.url%>">
-        <img src="/dibujos/<%= story.data.image %>" style="width: 100%; position: absolute; top: -40px;"/>
-<!--         <% delay = 7*(index+1) %>
-        <div style="<%="animation:move #{delay}s ease;-ms-animation:move #{delay}s ease;-webkit-animation:move #{delay}s ease;-0-animation:move #{delay}s ease;-moz-animation:move #{delay}s ease;"%>">
-          <p>
-            <%= story.render layout: false %>
-          </p>
-
-          <div class="bottom"></div>
-        </div> -->
+      <a href="<%=story.url%>" data-img="/dibujos/<%= story.data.image %>" class="image-container">
+        <img src="/dibujos/<%= story.data.image %>" />
       </a>
     </li>
   <% end %>
