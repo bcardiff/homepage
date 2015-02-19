@@ -8,7 +8,7 @@ Uno se da cuenta que está dormido, cuando el exterior no altera. El inconscient
 
 <br>
 
-Pero después está el temor. De tomar demasiada consciencia. Es consciencia que trae cuestionamientos y miedos. El instante anterior son los sueños lúcidos. Está bueno vivir ahí. Pero vivirlo solo? Cómo estar consciente de que hay otro en la sintonía. Si no es uno quien lo inventa o quien le inventa intención y sentimientos.
+Pero después está el temor. De tomar demasiada consciencia. Esa consciencia que trae cuestionamientos y miedos. El instante anterior son los sueños lúcidos. Está bueno vivir ahí. ¿Pero vivirlo solo? Cómo estar consciente de que hay otro en la sintonía. Si no es uno quien lo inventa o quien le inventa intención y sentimientos.
 
 <br>
 
