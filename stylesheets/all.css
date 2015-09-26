@@ -9,32 +9,42 @@ body {
   font-family: sans-serif;
 }
 
-h1 {
+h1, h2 {
   font-family: 'Alegreya SC', serif;
-  font-size: 3em;
   margin: 0;
   color: gray;
   text-shadow: 0px 1px white;
+}
+
+h1 {
+  font-size: 3em;
 }
 
 h1::before {
   content: '༄'
 }
 
+h2 {
+  font-size: 2em;
+}
+
 .content {
   width: 650px;
 }
 
-.content p, .content a {
+.content h1 {
+  margin: 0;
+  line-height: 1.3em;
+}
+
+.content {
   font-family: 'Alegreya', serif;
   font-size: 1.3em;
-  line-height: 1.3em;
-  margin: 0;
 }
 
 a {
   text-decoration: none;
-  color: grey;
+  color: #bcbcbc;
 }
 
 a:hover {
@@ -127,4 +137,32 @@ a:hover {
   width: 100%;
   height: 140px;
   display: block;
+}
+
+.articulos {
+  background: #d4d4d4;
+}
+
+.articulos h1 {
+  background: #eee;
+  padding-left: 10px;
+}
+
+.articulos h2 {
+  background: #eee;
+}
+
+.articulos p {
+  margin-bottom: .6em;
+}
+
+.articulos a {
+  text-decoration: underline;
+  color: #E88D3E;
+}
+
+.articulos .content {
+  width: 100%;
+  background: #eee;
+  padding-left: 10px;
 }
