@@ -13,6 +13,7 @@
 
 activate :directory_indexes
 
+page "/articulos/*", layout: :articulos
 page "/escritos/*"
 page "/dibujos/*", layout: :dibujos
 
@@ -46,11 +47,15 @@ page "/dibujos/*", layout: :dibujos
 # end
 
 # Methods defined in the helpers block are available in templates
-# helpers do
+helpers do
+  def embed_svg(file)
+    File.read(File.join(File.dirname(__FILE__), "source", File.dirname(current_page.path), file))
+  end
+
 #   def some_helper
 #     "Helping"
 #   end
-# end
+end
 
 set :css_dir, 'stylesheets'
 
