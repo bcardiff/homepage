@@ -32,11 +32,14 @@ h2 {
   width: 650px;
 }
 
-.content p {
+.content h1 {
+  margin: 0;
+  line-height: 1.3em;
+}
+
+.content {
   font-family: 'Alegreya', serif;
   font-size: 1.3em;
-  line-height: 1.3em;
-  margin: 0;
 }
 
 a {
