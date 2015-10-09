@@ -57,12 +57,12 @@ h2 {
   font-size: 1.3em;
 }
 
-a {
+.escritos a {
   text-decoration: none;
   color: #bcbcbc;
 }
 
-a:hover {
+.escritos a:hover {
   color: black;
 }
 
