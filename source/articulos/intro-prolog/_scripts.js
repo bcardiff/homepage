@@ -1,3 +1,6 @@
+PAUSE = 500;//200;
+ANIMATION = 1200;//400;
+
 function toText(elem) {
   var bbox = elem.select("path")[0][0].getBBox();
   elem.selectAll("*").remove();
@@ -24,7 +27,7 @@ function highlight(obj, callback) {
   original_color = obj.style("stroke");
   original_width = obj.style("stroke-width");
 
-  duration = 1200;
+  duration = ANIMATION;
 
   highlight_color = "#E88D3E";
   highlight_width = 4;
@@ -46,4 +49,8 @@ function highlight(obj, callback) {
             });
         });
     });
+}
+
+function pause(callback) {
+  if (callback) { window.setTimeout(callback, PAUSE); }
 }

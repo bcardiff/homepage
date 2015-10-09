@@ -1,0 +1,386 @@
+## Goals compuestos
+
+Las consultas pueden estar formadas por más de una cláusula.
+
+<pre>
+?- habla(A, I), habla(B, I)
+</pre>
+
+Siguiendo con la analogía de las cláusulas como cajas, cada vez que se obtenga un resultado para la primera, se buscarán los resultados de la segunda. Es importante notar que cada clásula se resuelve teniendo en cuenta *todas* las definiciones y el valor de las variables en ese momento.
+
+<center id="g3">
+  <div style="float:left; text-align: left; font-size: 0.8em;">
+    <code class="l1">habla(juan, ruso).</code><br/>
+    <code class="l2">habla(juan, inglés).</code><br/>
+    <code class="l3">habla(maría, inglés).</code><br/>
+    <code class="l4">habla(pedro, ruso).</code><br/>
+    <br/>
+    <code class="l5">?- habla(A, I), habla(B, I).</code><br/>
+  </div>
+  <div style="float:left; text-align: left; font-size: 0.8em;">
+    <code class="l6">A = juan, B = juan, I = ruso;</code><br/>
+    <code class="l7">A = juan, B = pedro, I = ruso;</code><br/>
+    <code class="l8">A = juan, B = juan, I = inglés;</code><br/>
+    <code class="l9">A = juan, B = maría, I = inglés;</code><br/>
+    <code class="l10">A = maría, B = juan, I = inglés;</code><br/>
+    <code class="l11">A = maría, B = maría, I = inglés;</code><br/>
+    <code class="l12">A = pedro, B = juan, I = ruso;</code><br/>
+    <code class="l13">A = pedro, B = pedro, I = ruso.</code><br/>
+  </div>
+  <%= embed_svg "program-compound-goal.svg" %>
+  <script>
+  g3 = d3.select("#g3 svg");
+  c3 = $("#g3");
+
+  g3_call = g3.selectAll("#shapePath4, #shapePath6");
+  g3_b1_cursor = toText(g3.select("#Shape17")).text("?");
+  g3_b2_cursor = toText(g3.select("#Shape18")).text("?");
+  g3_a = toText(g3.select("#Shape19")).text("A = ???");
+  g3_i = toText(g3.select("#Shape20")).text("I = ???");
+  g3_b = toText(g3.select("#Shape21")).text("B = ???");
+  g3_next_call = g3.selectAll("#shapePath2, #shapePath7");
+  g3_exit = g3.selectAll("#shapePath11, #shapePath13");
+  g3_fail = g3.selectAll("#shapePath5, #shapePath9");
+  g3_redo = g3.selectAll("#shapePath12, #shapePath14");
+  g3_redo_exit = g3.selectAll("#shapePath3, #shapePath8");
+  $("div:nth-child(2) code", c3).hide();
+
+  function setG3C1(number) {
+    $("*", c3).removeClass("c1");
+    g3_b1_cursor.text(number);
+    if (number != "?")
+      $(".l" + number, c3).addClass("c1");
+  }
+
+  function setG3C2(number) {
+    $("*", c3).removeClass("c2");
+    g3_b2_cursor.text(number);
+    if (number != "?")
+      $(".l" + number, c3).addClass("c2");
+  }
+
+  function g3s1(callback) {
+    highlight(g3_call, function(){
+      highlight(g3_b1_cursor, function(){
+        setG3C1("1");
+        pause(callback);
+      });
+    });
+  }
+
+  function g3s2(callback) {
+    g3_a.text("A = juan");
+    g3_i.text("I = ruso");
+    pause(function(){
+      highlight(g3_next_call, function(){
+        highlight(g3_b2_cursor, function(){
+          setG3C2("1");
+          pause(function(){
+            g3_b.text("B = juan");
+            pause(function(){
+              highlight(g3_exit, function(){
+                $(".l6", c3).show();
+                pause(callback);
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s3(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("2");
+        pause(function(){
+          setG3C2("3");
+          pause(function(){
+            setG3C2("4");
+            pause(function(){
+              g3_b.text("B = pedro");
+              pause(function(){
+                highlight(g3_exit, function(){
+                  $(".l7", c3).show();
+                  pause(callback);
+                })
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s4(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("?");
+        pause(function(){
+          highlight(g3_redo_exit, function(){
+            g3_a.text("A = ???");
+            g3_i.text("I = ???");
+            highlight(g3_b1_cursor, function() {
+              setG3C1("2");
+              pause(function(){
+                g3_a.text("A = juan");
+                g3_i.text("I = inglés");
+                highlight(g3_next_call, callback);
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s5(callback) {
+    highlight(g3_b2_cursor, function(){
+      setG3C2("1");
+      pause(function(){
+        setG3C2("2");
+        pause(function(){
+          g3_b.text("B = juan");
+          pause(function(){
+            highlight(g3_exit, function(){
+              $(".l8", c3).show();
+              pause(callback);
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s6(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("3");
+        pause(function(){
+          g3_b.text("B = maría");
+          pause(function(){
+            highlight(g3_exit, function(){
+              $(".l9", c3).show();
+              pause(callback);
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s7(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("4");
+        pause(function(){
+          setG3C2("?");
+          pause(function(){
+            highlight(g3_redo_exit, function(){
+              g3_a.text("A = ???");
+              g3_i.text("I = ???");
+              highlight(g3_b1_cursor, function() {
+                setG3C1("3");
+                pause(function(){
+                  g3_a.text("A = maría");
+                  g3_i.text("I = inglés");
+                  highlight(g3_next_call, callback);
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s8(callback) {
+    highlight(g3_b2_cursor, function(){
+      setG3C2("1");
+      pause(function(){
+        setG3C2("2");
+        pause(function(){
+          g3_b.text("B = juan");
+          pause(function(){
+            highlight(g3_exit, function(){
+              $(".l10", c3).show();
+              pause(callback);
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s9(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("3");
+        pause(function(){
+          g3_b.text("B = maría");
+          pause(function(){
+            highlight(g3_exit, function(){
+              $(".l11", c3).show();
+              pause(callback);
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s10(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("4");
+        pause(function(){
+          setG3C2("?");
+          pause(function(){
+            highlight(g3_redo_exit, function(){
+              g3_a.text("A = ???");
+              g3_i.text("I = ???");
+              highlight(g3_b1_cursor, function() {
+                setG3C1("4");
+                pause(function(){
+                  g3_a.text("A = pedro");
+                  g3_i.text("I = ruso");
+                  highlight(g3_next_call, callback);
+                });
+              })
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s11(callback) {
+    highlight(g3_b2_cursor, function(){
+      setG3C2("1");
+      pause(function(){
+        g3_b.text("B = juan");
+        pause(function(){
+          highlight(g3_exit, function(){
+            $(".l12", c3).show();
+            pause(callback);
+          });
+        });
+      });
+    });
+  }
+
+  function g3s12(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("2");
+        pause(function(){
+          setG3C2("3");
+          pause(function(){
+            setG3C2("4");
+            pause(function(){
+              g3_b.text("B = pedro");
+              pause(function(){
+                highlight(g3_exit, function(){
+                  $(".l13", c3).show();
+                  pause(callback);
+                })
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  function g3s13(callback) {
+    highlight(g3_redo, function(){
+      g3_b.text("B = ???");
+      highlight(g3_b2_cursor, function() {
+        setG3C2("?");
+        pause(function(){
+          highlight(g3_redo_exit, function(){
+            g3_a.text("A = ???");
+            g3_i.text("I = ???");
+            highlight(g3_b1_cursor, function() {
+              setG3C1("?");
+              pause(function(){
+                highlight(g3_fail, callback);
+              });
+            })
+          });
+        });
+      });
+    });
+  }
+
+  function g3g(i) {
+    switch (i) {
+      case 1:g3s1(g3s2);break;
+      case 2:g3s3();break;
+      case 3:g3s4(g3s5);break;
+      case 4:g3s6();break;
+      case 5:g3s7(g3s8);break;
+      case 6:g3s9();break;
+      case 7:g3s10(g3s11);break;
+      case 8:g3s12(g3s13);break;
+    }
+  }
+
+  function g3total() {
+    g3s1(function(){
+      g3s2(function(){
+        g3s3(function(){
+          g3s4(function(){
+            g3s5(function(){
+              g3s6(function(){
+                g3s7(function(){
+                  g3s8(function(){
+                    g3s9(function(){
+                      g3s10(function(){
+                        g3s11(function(){
+                          g3s12(g3s13)
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    })
+  }
+  </script>
+</center>
+
+<% %W(En total hay ocho soluciones para el goal).each_with_index do |w, i| %>
+  [<%=w%>](javascript:g3g(<%=i+1%>))
+<% end %>.
+
+* TBD operador \\=
+
+<pre>
+?- habla(A, I), habla(B, I), A \= B.
+</pre>
+
+* TBD reglas
+
+<pre>
+hablaCon(A, B) :- habla(A, I), habla(B, I), A \= B.
+</pre>
+
+* TBD visualización de árbol
+
+<pre>
+interprete(A, P, Q) :- hablaCon(A, P), hablaCon(A, Q), P \= Q.
+</pre>
+
+* TBD árbol con reglas

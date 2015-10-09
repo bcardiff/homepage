@@ -7,6 +7,34 @@ title: Introducción a Prolog
     color: #E88D3E;
     font-weight: bold;
 }
+
+#g3 code {
+  padding-left: 2em;
+}
+
+#g3 code::before {
+  content: '\00a0\00a0';
+  font-size: 1.3em;
+  line-height: 0.7em;
+}
+
+#g3 .c1::before {
+  content: '●\00a0';
+  color: #E88D3E;
+}
+
+#g3 .c2::before {
+  content: '\00a0●';
+  color: #96E830;
+}
+
+#g3 .c1.c2::before {
+  content: '●●';
+
+  background: -webkit-linear-gradient(left, #E88D3E 0%, #E88D3E 50%, #96E830 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 </style>
 
 <script>
@@ -15,20 +43,8 @@ title: Introducción a Prolog
 
 <%= partial "01_session" %>
 <%= partial "02_primer_programa" %>
+<%= partial "03_goals_compuestos" %>
 
-## Goals compuestos
-
-```
-?- habla(A, I), habla(B, I)
-```
-
-* soluciones sin sentido
-
-```
-?- habla(A, I), habla(B, I), A /= B.
-```
-
-* TBD solución con cajas
 
 --
 

@@ -4,36 +4,36 @@
 El programa más simple sería una enumeración explícita de **hechos**.
 
 <pre>
-habla(juan, castellano).
+habla(juan, ruso).
 habla(juan, inglés).
 habla(maría, inglés).
-habla(pedro, castellano).
+habla(pedro, ruso).
 </pre>
 
-Una consulta estará formada por al menos una cláusula. En este caso hay una **variable sin instanciar** `X` y una **constante** `castellano`.
+Una consulta estará formada por al menos una cláusula. En este caso hay una **variable sin instanciar** `X` y una **constante** `ruso`.
 
 <pre>
-?- habla(X, castellano).
+?- habla(X, ruso).
 </pre>
 
 Es fácil ver que las soluciones posibles son aquellas donde `X=juan` y luego `X=pedro`.
 
-Para obtenerlas, se recorren una por una las definiciones que coincidan, o **unifiquen** con `habla(X, castellano)`. Internamente se puede pensar en un cursor que recorre los hechos a medida que se van pidiendo soluciones.
+Para obtenerlas, se recorren una por una las definiciones que coincidan, o **unifiquen** con `habla(X, ruso)`. Internamente se puede pensar en un cursor que recorre los hechos a medida que se van pidiendo soluciones.
 
-En un [primer paso](javascript:g2s1()) se inicializa la consulta y el cursor se ubicará en la definición del primer hecho, que, como coincide con `habla(X, castellano)`, se **unifica** `X=juan` obteniendo la primer solución.
+En un [primer paso](javascript:g2s1()) se inicializa la consulta y el cursor se ubicará en la definición del primer hecho, que, como coincide con `habla(X, ruso)`, se **unifica** `X=juan` obteniendo la primer solución.
 
-Luego el usuario podrá pedir una [segunda solución](javascript:g2s2()). A continuación se buscarán las siguientes definiciones que puedan unicar con `habla(X, castellano)`. Esto se logra recién en la última definición. Dando lugar al [segundo resultado](javascript:g2s3()) unificando ahora `X=pedro`. Notar que cada solución tiene una instanción distinta en las variables.
+Luego el usuario podrá pedir una [segunda solución](javascript:g2s2()). A continuación se buscarán las siguientes definiciones que puedan unicar con `habla(X, ruso)`. Esto se logra recién en la última definición. Dando lugar al [segundo resultado](javascript:g2s3()) unificando ahora `X=pedro`. Notar que cada solución tiene una instanción distinta en las variables.
 
 Al pedir una [tercera solución](javascript:g2s4()) no se encontrarán más definiciones que unifiquen con el objetivo y se informará que no hay más soluciones.
 
 <center id="g2">
   <div style="float:left; text-align: left; font-size: 0.7em;">
-    <code class="l1">habla(juan, castellano).</code><br/>
+    <code class="l1">habla(juan, ruso).</code><br/>
     <code class="l2">habla(juan, inglés).</code><br/>
     <code class="l3">habla(maría, inglés).</code><br/>
-    <code class="l4">habla(pedro, castellano).</code><br/>
+    <code class="l4">habla(pedro, ruso).</code><br/>
     <br/>
-    <code class="l5">?- habla(X, castellano).<span class="n">↵</span></code><br/>
+    <code class="l5">?- habla(X, ruso).<span class="n">↵</span></code><br/>
     <code class="l6">X = juan<span class="n">;↵</span></code><br/>
     <code class="l7">X = pedro<span class="n">;↵</span></code><br/>
     <code class="l8">fail</code><br/>
@@ -79,10 +79,6 @@ Al pedir una [tercera solución](javascript:g2s4()) no se encontrarán más defi
     function setG2CursorState(line) {
       g2_index.text(line);
       setCursor(".l" + line, c2);
-    }
-
-    function pause(callback) {
-      if (callback) { window.setTimeout(callback, 500); }
     }
 
     function g2s1(callback) {

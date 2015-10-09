@@ -3,13 +3,13 @@
 
 body {
   font-family: 'Lato', sans-serif;
-  background-color: #ccc;
+  background-color: #eee;
 }
 
 h1, h2 {
   font-family: 'Alegreya SC', serif;
   margin: 0;
-  text-shadow: 0px 1px white;
+  text-shadow: 0px 1px 3px #ccc;
 }
 
 h1::before {
