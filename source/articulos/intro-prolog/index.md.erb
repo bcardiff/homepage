@@ -217,9 +217,9 @@ $(function(){
     $(this).attr('href', "javascript:highlight(" + $(this).attr('href').substring(5) + ")")
   });
 
-  $("a[href^='javascript:highlight']").mouseenter(function(){
-    eval($(this).attr('href'));
-  });
+  // $("a[href^='javascript:highlight']").mouseenter(function(){
+  //   eval($(this).attr('href'));
+  // });
 });
 
 var animating = false;
