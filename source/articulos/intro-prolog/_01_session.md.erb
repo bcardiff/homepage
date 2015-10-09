@@ -1,0 +1,21 @@
+## La sesión con el usuario
+
+Un programa en Prolog se conforma de una serie de reglas. Pero antes de ver qué aspecto tiene veamos qué esperamos al ejecutarlo.
+
+El usuario al usar un programa Prolog indicará un [goal u objetivo](#ref:g1_goal) del cual espera obtener soluciones en caso de que existan. La ejecución es la búsqueda de múltiples soluciones. Siempre.
+
+<center id="g1">
+  <%= embed_svg "goal-1.svg" %>
+  <script>
+    g1 = d3.select("#g1 svg");
+    g1_goal = g1.selectAll("#shapePath1");
+    g1_call = g1.selectAll("#shapePath11, #shapePath4");
+    g1_exit = g1.selectAll("#shapePath12, #shapePath2");
+    g1_redo = g1.selectAll("#shapePath13, #shapePath3");
+    g1_fail = g1.selectAll("#shapePath14, #shapePath5");
+  </script>
+</center>
+
+Al [iniciar la búsqueda](#ref:g1_call) se usarán las reglas definidas para obtener [una primera solución](#ref:g1_exit). A continuación el usuario podrá, luego de analizar la solución, [pedir otra](#ref:g1_redo). El programa mantiene un estado para seguir con la búsqueda. Suponiendo que exista una segunda solución, se informa [de la misma manera](#ref:g1_exit) y el se podrá [repetir](#ref:g1_redo) [el](#ref:g1_exit) [proceso](#ref:g1_redo). Eventualmente (si todo funciona bien) el programa indicará que [no hay más soluciones](#ref:g1_fail).
+
+Ésta es la manera en la que el usuario interactura con un intérprete de Prolog. Veremos también que es una forma de entender cómo funciona un programa paso a paso.
