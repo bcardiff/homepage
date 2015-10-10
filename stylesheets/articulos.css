@@ -29,4 +29,17 @@ h1::before {
   /* line 30, /Users/bcardiff/Work/bcardiff/homepage/source/stylesheets/articulos.scss */
   .content pre {
     border: 1px solid black;
-    padding: 0.4em 0; }
+    padding: 0.4em 0.1em; }
+  /* line 35, /Users/bcardiff/Work/bcardiff/homepage/source/stylesheets/articulos.scss */
+  .content > pre {
+    border: 0px;
+    padding: 0.4em 1em;
+    margin: 0 -1em;
+    background-color: #ddd; }
+  /* line 42, /Users/bcardiff/Work/bcardiff/homepage/source/stylesheets/articulos.scss */
+  .content h2 {
+    margin-top: 1em; }
+  /* line 46, /Users/bcardiff/Work/bcardiff/homepage/source/stylesheets/articulos.scss */
+  .content .box {
+    background-color: #efefef;
+    padding: 1em; }
