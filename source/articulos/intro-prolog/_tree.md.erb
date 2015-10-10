@@ -1,0 +1,217 @@
+<style>
+
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 3px;
+	}
+
+  .node.success circle {
+    stroke: lightgreen;
+  }
+
+  .node.fail circle {
+    stroke: red;
+  }
+
+	.node text { font: 1em 'Lato' }
+
+  .node { cursor: pointer; }
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+
+</style>
+
+<svg id="tree">
+</svg>
+
+<script>
+var treeData = [
+  {
+    "name": "seComunican(maría, A)",
+    "parent": "null",
+    "children": [
+      {
+        "name": "telepatía(maría, A)",
+        "parent": "seComunican(maría, A)",
+        "children": [
+          {
+            "name": "⟂ con A = pedro",
+            "parent": "telepatía(maría, A)",
+            "kind": "success"
+          }
+        ]
+      },
+      {
+        "name": "hablaCon(maría, A)",
+        "parent": "seComunican(maría, A)",
+        "children": [
+          {
+            "name": "habla(maría, I), habla(A, I), maría \\= A",
+            "parent": "hablaCon(maría, A)",
+            "children": [
+              {
+                "name": "habla(A, inglés), maría \\= A",
+                "parent": "habla(maría, I), habla(A, I), maría \\= A",
+                "children": [
+
+                  {
+                    "name": "maría \\= juan",
+                    "parent": "habla(A, inglés), maría \\= A",
+                    "children": [
+                      {
+                        "name": "⟂ con A = juan",
+                        "parent": "maría \\= juan",
+                        "kind": "success"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "maría \\= maría",
+                    "parent": "habla(A, inglés), maría \\= A",
+                    "children": [
+                      {
+                        "name": "falla",
+                        "parent": "maría \\= maría",
+                        "kind": "fail"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 40, right: 120, bottom: 20, left: 120},
+	width = 960 - margin.right - margin.left,
+	height = 570 - margin.top - margin.bottom;
+
+var i = 0;
+
+var tree = d3.layout.tree()
+	.size([height, width]);
+
+var showingAll = true;
+
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) {
+    if (showingAll) {
+      return [d.x, d.y];
+    } else {
+      return [root.x, d.y];
+    }
+  });
+
+var svg = d3.select("#tree")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+
+update(root);
+
+function update(source) {
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+  var link;
+
+  var selectedLinks;
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 100; });
+
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  var showBranchOnly = function(d) {
+    svg.selectAll(".node").classed("hide", true).classed("keep", false);
+    var current = d;
+    while (current != null) {
+      svg.selectAll(".node-" + current.id)
+        .classed("keep", true)
+        .classed("hide", false);
+      current = current.parent;
+    }
+
+    svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+      .style("opacity",0).each("end", function(){
+        link.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+        svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+          .attr("transform", function(d) {
+            return "translate(" + root.x + "," + d.y + ")";
+          });
+      });
+
+  };
+
+  var showAll = function() {
+
+    link.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+    svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+      .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      }).each("end", function(){
+
+        svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+          .style("opacity",1);
+
+        // svg.selectAll("path.link").transition().duration(ANIMATION/2)
+        //   .style("opacity",1);
+
+        svg.selectAll(".node").classed("hide", false).classed("keep", false);
+      });
+  };
+
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", function(d) { return "node node-" + d.id + " " + d.kind; })
+	  .attr("transform", function(d) {
+		  return "translate(" + d.x + "," + d.y + ")"; })
+    .on("click", function(d) {
+      showingAll = !showingAll;
+      if (!showingAll)
+        showBranchOnly(d);
+      else
+        showAll(d);
+    });
+
+  nodeEnter.append("circle")
+	  .attr("r", 10)
+	  .style("fill", "#fff");
+
+
+  nodeEnter.append("text")
+	  .attr("y", function(d) {
+		  return d.children || d._children ? -22 : 22; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", "middle")
+	  .text(function(d) { return d.name; })
+	  .style("fill-opacity", 1)
+
+  // Declare the links…
+  link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+
+  // Enter the links.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", diagonal);
+}
+</script>

@@ -26,7 +26,9 @@ $(function(){
     for(var i = 0; i < links.length; i++) {
       if (links[i] == this) {
         pause(function(){
-          $(links[i+1]).addClass("next");
+          pause(function(){
+            $(links[i+1]).addClass("next");
+          });
         });
         return;
       }
