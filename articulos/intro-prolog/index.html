@@ -21,6 +21,17 @@
     </div>
     <div class="content">
       <style>
+
+.content a {
+  padding: .1em .3em;
+}
+
+a.next {
+  background-color: #E88D3E;
+  color: white;
+  text-decoration: none;
+}
+
 .cursor {
     color: #E88D3E;
     font-weight: bold;
@@ -79,6 +90,24 @@ $(function(){
   // $("a[href^='javascript:highlight']").mouseenter(function(){
   //   eval($(this).attr('href'));
   // });
+
+  var links = $(".content a[href^='javascript']");
+  $(links[0]).addClass("next");
+
+  $(links).click(function(){
+    var _this = $(this);
+    links.removeClass("next")
+    for(var i = 0; i < links.length; i++) {
+      if (links[i] == this) {
+        pause(function(){
+          pause(function(){
+            $(links[i+1]).addClass("next");
+          });
+        });
+        return;
+      }
+    }
+  });
 });
 
 var animating = false;
@@ -1055,22 +1084,22 @@ seComunican(A, B) :- hablaCon(A, B).
         </g>
         <g id="Shape15">
             <desc shapeid="15" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-41.2447,-89,82.4895,178)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,225.353,138.5)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath15" d="M218.5,49.5 C233.784,56.0986 258.727,50.646 266.5,69.5 C264.978,103.933 271.089,145.074 257.5,171.5 C243.208,184.047 213.409,176.369 192.5,181.5 C184.18,191.646 183.402,207.598 184.5,223.5 C191.016,228.745 204.949,224.815 212.5,227.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill15);fill-opacity:1;" /><defs><pattern id="patternFill15" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,184.108,49.5)"><image id="patternImagepatternFill15_0" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath15" d="M218.5,49.5 C233.784,56.0986 258.727,50.646 266.5,69.5 C264.978,103.933 271.089,145.074 257.5,171.5 C243.208,184.047 213.409,176.369 192.5,181.5 C184.18,191.646 183.402,207.598 184.5,223.5 C191.016,228.745 204.949,224.815 212.5,227.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill15);fill-opacity:1;" /><defs><pattern id="patternFill15" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill15_0" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath15" d="M204.104,230.582 L214.488,227.723 L204.996,222.632 L204.104,230.582 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape16">
             <desc shapeid="16" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-38.3929,-89.5203,76.7857,179.041)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,333.352,138.979)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath16" d="M345.5,228.5 C394.501,226.484 367.961,150.183 322.5,165.5 C316.769,163.053 305.601,166.259 299.5,160.5 C288.801,112.991 293.839,47.5906 349.5,49.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill16);fill-opacity:1;" /><defs><pattern id="patternFill16" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,294.959,49.4591)"><image id="patternImagepatternFill16_1" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath16" d="M345.5,228.5 C394.501,226.484 367.961,150.183 322.5,165.5 C316.769,163.053 305.601,166.259 299.5,160.5 C288.801,112.991 293.839,47.5906 349.5,49.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill16);fill-opacity:1;" /><defs><pattern id="patternFill16" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill16_1" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath16" d="M341.676,53.8339 L351.498,49.4156 L341.338,45.841 L341.676,53.8339 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape17">
             <desc shapeid="17" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-35.076,-79.8429,70.1518,159.686)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,356.03,195.657)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath17" d="M343.5,116.5 C328.306,112.738 318.479,125.017 321.5,139.5 C324.853,140.929 326.806,145.844 331.5,147.5 C377.134,151.345 394.717,199.485 390.5,241.5 C384.08,261.456 361.143,272.157 343.5,275.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill17);fill-opacity:1;" /><defs><pattern id="patternFill17" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,320.954,115.814)"><image id="patternImagepatternFill17_2" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath17" d="M343.5,116.5 C328.306,112.738 318.479,125.017 321.5,139.5 C324.853,140.929 326.806,145.844 331.5,147.5 C377.134,151.345 394.717,199.485 390.5,241.5 C384.08,261.456 361.143,272.157 343.5,275.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill17);fill-opacity:1;" /><defs><pattern id="patternFill17" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill17_2" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath17" d="M350.271,269.656 L341.561,275.992 L352.238,277.411 L350.271,269.656 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape18">
             <desc shapeid="18" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-38.4399,-70.8475,76.8797,141.695)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,189.113,217.348)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath18" d="M208.5,287.5 C163.391,294.717 136.477,244.186 158.5,207.5 C158.293,180.56 179.632,162.386 207.5,166.5 C212.744,164.581 218.269,164.982 223.5,163.5 C228.78,160.046 227.312,152.433 227.5,146.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill18);fill-opacity:1;" /><defs><pattern id="patternFill18" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,150.673,146.5)"><image id="patternImagepatternFill18_3" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath18" d="M208.5,287.5 C163.391,294.717 136.477,244.186 158.5,207.5 C158.293,180.56 179.632,162.386 207.5,166.5 C212.744,164.581 218.269,164.982 223.5,163.5 C228.78,160.046 227.312,152.433 227.5,146.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill18);fill-opacity:1;" /><defs><pattern id="patternFill18" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill18_3" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath18" d="M231.373,154.562 L227.532,144.5 L223.374,154.436 L231.373,154.562 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
     </g>
@@ -1093,22 +1122,22 @@ seComunican(A, B) :- hablaCon(A, B).
         </g>
         <g id="Shape23">
             <desc shapeid="23" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-38.3929,-89.5203,76.7857,179.041)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,334.352,136.979)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath23" d="M346.5,226.5 C395.501,224.484 368.961,148.183 323.5,163.5 C317.769,161.053 306.601,164.259 300.5,158.5 C289.801,110.991 294.839,45.5906 350.5,47.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill23);fill-opacity:1;" /><defs><pattern id="patternFill23" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,295.959,47.4591)"><image id="patternImagepatternFill23_1" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath23" d="M346.5,226.5 C395.501,224.484 368.961,148.183 323.5,163.5 C317.769,161.053 306.601,164.259 300.5,158.5 C289.801,110.991 294.839,45.5906 350.5,47.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill23);fill-opacity:1;" /><defs><pattern id="patternFill23" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill23_1" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath23" d="M342.677,51.8351 L352.498,47.4153 L342.338,43.8423 L342.677,51.8351 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape24">
             <desc shapeid="24" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-35.076,-79.8429,70.1518,159.686)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,357.03,193.657)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath24" d="M344.5,114.5 C329.306,110.738 319.479,123.017 322.5,137.5 C325.853,138.929 327.806,143.844 332.5,145.5 C378.134,149.345 395.717,197.485 391.5,239.5 C385.08,259.456 362.143,270.157 344.5,273.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill24);fill-opacity:1;" /><defs><pattern id="patternFill24" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,321.954,113.814)"><image id="patternImagepatternFill24_2" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath24" d="M344.5,114.5 C329.306,110.738 319.479,123.017 322.5,137.5 C325.853,138.929 327.806,143.844 332.5,145.5 C378.134,149.345 395.717,197.485 391.5,239.5 C385.08,259.456 362.143,270.157 344.5,273.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill24);fill-opacity:1;" /><defs><pattern id="patternFill24" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill24_2" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath24" d="M351.271,267.656 L342.561,273.992 L353.238,275.411 L351.271,267.656 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape25">
             <desc shapeid="25" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-50.3325,-87.1555,100.665,174.311)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,203.507,195.461)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath25" d="M211.5,281.5 C153.747,293.055 139.87,211.96 165.5,176.5 C186.43,155.306 215.911,158.89 242.5,155.5 C268.897,137.306 244.615,101.307 216.5,109.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill25);fill-opacity:1;" /><defs><pattern id="patternFill25" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,153.175,108.306)"><image id="patternImagepatternFill25_3" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath25" d="M211.5,281.5 C153.747,293.055 139.87,211.96 165.5,176.5 C186.43,155.306 215.911,158.89 242.5,155.5 C268.897,137.306 244.615,101.307 216.5,109.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill25);fill-opacity:1;" /><defs><pattern id="patternFill25" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill25_3" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath25" d="M223.962,104.569 L214.514,109.74 L224.922,112.512 L223.962,104.569 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape26">
             <desc shapeid="26" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-40.2056,-43.1796,80.4111,86.3592)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,225.453,189.68)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath26" d="M265.5,146.5 C265.766,151.115 266.005,155.724 263.5,159.5 C257.696,162.532 246.73,163.158 239.5,167.5 C233.724,168.389 228.128,169.502 222.5,171.5 C180.816,167.863 169.078,238.476 213.5,232.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill26);fill-opacity:1;" /><defs><pattern id="patternFill26" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,185.248,146.5)"><image id="patternImagepatternFill26_0" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath26" d="M265.5,146.5 C265.766,151.115 266.005,155.724 263.5,159.5 C257.696,162.532 246.73,163.158 239.5,167.5 C233.724,168.389 228.128,169.502 222.5,171.5 C180.816,167.863 169.078,238.476 213.5,232.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill26);fill-opacity:1;" /><defs><pattern id="patternFill26" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill26_0" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath26" d="M205.505,236.51 L215.5,232.498 L205.495,228.51 L205.505,236.51 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
     </g>
@@ -1139,42 +1168,42 @@ seComunican(A, B) :- hablaCon(A, B).
         </g>
         <g id="Shape33">
             <desc shapeid="33" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-123.755,-85.7569,247.511,171.514)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,152.255,307.743)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath33" d="M217.5,222.5 C236.537,221.212 258.528,221.512 269.5,233.5 C280.83,266.888 279.647,321.047 247.5,337.5 C179.14,344.33 106.853,331.621 39.5,340.5 C29.3686,350.264 28.6268,364.53 28.5,379.5 C37.4587,387.533 41.8102,393.067 55.5,393.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill33);fill-opacity:1;" /><defs><pattern id="patternFill33" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,28.5,221.986)"><image id="patternImagepatternFill33_4" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath33" d="M217.5,222.5 C236.537,221.212 258.528,221.512 269.5,233.5 C280.83,266.888 279.647,321.047 247.5,337.5 C179.14,344.33 106.853,331.621 39.5,340.5 C29.3686,350.264 28.6268,364.53 28.5,379.5 C37.4587,387.533 41.8102,393.067 55.5,393.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill33);fill-opacity:1;" /><defs><pattern id="patternFill33" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill33_4" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath33" d="M46.9764,396.211 L57.4758,393.81 L48.2173,388.307 L46.9764,396.211 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape34">
             <desc shapeid="34" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-9.5,0,19,0)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="1" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,200,389.5)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" /><image id="shadowImage34" x="" y="" width="79" height="66" transform="matrix(1,0,0,1,161.5,358.5)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAABCCAYAAAAWqotYAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAaRJREFUeJzt2NtuwjAQRdEdEigtvf3/b1IoARL6MGPZmCJQhZxAz5IsCCHCOozjARAREREREREREREREREREblT1dATuCCf32GQWZwx1vAqYJI8ggUXRs8IghxjeCGwBqiBKXGePdABe38MIQ4S5BDhVdnn5nMIwU2BJx+NnwvBtcDOn++xEItXY8nwQmgT4pLMgwSrthkwB16AhR9XWHhb4BvY+Nj6SEMsorn8lptIg6t95CEGNRbcAngHPoBnn2uHVd0S+PKx9uvC8q0oVIGlwoPj8Bofv4XXEKvuFfgE3rBlfMCqLSzlEFRHvAc+XOXBaXhTYgWmwr1ujlVcunQPxArcYcu1xQJNv4gilZdPvKS09fjLtYMrWXmhP+uI1dFzumx77EvdYBvD2o9nfm6D3etWfj7svB2F25ahwoPjIFPhtXRjaf15vmGssHBDeMXud1AuvFANfXJ8rlVJK6jHWpBlcn1LbFVaBqy8e2mSaz/XEzeKHccV99BN8rXOtTTpss9/Vfybn2fX0B8DNzDqv6RERERERERERERERERERETu1g/xNofPTON5CwAAAABJRU5ErkJggg==" />
-            <path id="shapePath34" d="M190.5,389.5 L209.5,389.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill34);fill-opacity:1;" /><defs><pattern id="patternFill34" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(nan,nan,nan,nan,190.5,389.5)"><image id="patternImagepatternFill34_5" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath34" d="M190.5,389.5 L209.5,389.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill34);fill-opacity:1;" /><defs><pattern id="patternFill34" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill34_5" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath34" d="M201.5,393.5 L211.5,389.5 L201.5,385.5 L201.5,393.5 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape35">
             <desc shapeid="35" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-9,0,18,0)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="1" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,349.5,389.5)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" /><image id="shadowImage35" x="" y="" width="78" height="66" transform="matrix(1,0,0,1,311.5,358.5)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAABCCAYAAAD5aOBmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAa5JREFUeJzt2NtSwjAUheG/tAieff/X5KAc2nqxsyehHOqFJIjrm8mUWhjjYifdFURERERERERERERERERERK6gKj2BC4Zz64vM4oxbDK4CJsnRdVh4fizq1oLzsBqgBqbEOXZAC+zD0QMsEmKJ4KrB701fe2hTYBZGE655aBtgF17vsQCzV2HO4DywCXEpDkOsgQdgDjwBz+G8woLbAp/AVxjbMNIAs2jG3/Ir0tDqMIYBEn4+xwJ7A96BxzDPFqu2BbAMYx0+50u2IlPl5QoODoNrwhgG1xCr7QX4AF6xpdtjVTYj7n09FqjveXdXcXAc3JRYec73tjlWaely7YmVt8Oqb4OFmX4BWSpuMv6Wq+k5f1e89McXb0Ugb8V5D9YSK6PjcKl22Jf5gN0E1sl5h1XXEliF636HbcncmpQKDg5DdH7uS3qChVNzfHNYYcF6cNn2N8gXnFdCl5yfakfSyumxNmORfHZDbEd8jytScX+hAa7DtQ4LaRuOaaXddQP8E+dalnSZD58W/s0j15hTD/np8tVD/oib/reSiIiIiIiIiIiIiIiIiIjIVXwDrm6G3JsrG64AAAAASUVORK5CYII=" />
-            <path id="shapePath35" d="M340.5,389.5 L358.5,389.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill35);fill-opacity:1;" /><defs><pattern id="patternFill35" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(nan,nan,nan,nan,340.5,389.5)"><image id="patternImagepatternFill35_6" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath35" d="M340.5,389.5 L358.5,389.5 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill35);fill-opacity:1;" /><defs><pattern id="patternFill35" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill35_6" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath35" d="M350.5,393.5 L360.5,389.5 L350.5,385.5 L350.5,393.5 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape36">
             <desc shapeid="36" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-116.279,-79.684,232.559,159.368)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,402.079,305.822)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath36" d="M492.5,385.5 C522.046,386.087 527.491,346.767 502.5,331.5 C465.388,330.038 429.639,332.195 393.817,338.632 C362.226,331.676 333.452,334.88 305.522,333.616 C268.29,309.261 286.248,222.493 338.632,226.257 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill36);fill-opacity:1;" /><defs><pattern id="patternFill36" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,285.8,226.138)"><image id="patternImagepatternFill36_7" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath36" d="M492.5,385.5 C522.046,386.087 527.491,346.767 502.5,331.5 C465.388,330.038 429.639,332.195 393.817,338.632 C362.226,331.676 333.452,334.88 305.522,333.616 C268.29,309.261 286.248,222.493 338.632,226.257 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill36);fill-opacity:1;" /><defs><pattern id="patternFill36" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill36_7" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath36" d="M330.795,230.567 L340.63,226.179 L330.482,222.573 L330.795,230.567 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape37">
             <desc shapeid="37" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-114.176,-86.7907,228.352,173.581)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,423.354,360.205)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath37" d="M337.629,273.414 C320.462,273.888 302.656,291.766 311.542,308.532 C343.204,323.205 381.872,325.128 417.897,320.572 C443.887,304.965 475.062,306.843 504.186,308.532 C543.422,326.713 537.979,377.721 536.293,415.891 C524.246,431.042 510.35,446.559 491.142,446.995 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill37);fill-opacity:1;" /><defs><pattern id="patternFill37" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,309.178,273.414)"><image id="patternImagepatternFill37_8" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath37" d="M337.629,273.414 C320.462,273.888 302.656,291.766 311.542,308.532 C343.204,323.205 381.872,325.128 417.897,320.572 C443.887,304.965 475.062,306.843 504.186,308.532 C543.422,326.713 537.979,377.721 536.293,415.891 C524.246,431.042 510.35,446.559 491.142,446.995 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill37);fill-opacity:1;" /><defs><pattern id="patternFill37" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill37_8" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath37" d="M498.411,441.783 L489.167,447.31 L499.673,449.683 L498.411,441.783 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape38">
             <desc shapeid="38" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-8.02702,0,16.054,0)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="1" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,351.676,439.971)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" /><image id="shadowImage38" x="" y="" width="76" height="66" transform="matrix(1,0,0,1,312.649,408.971)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABCCAYAAAD9nTBbAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAXxJREFUeJzt2O1OKjEURuHFoAfR49H7v00/UIHh/Njd6Ug0hqjtaNaTNEODgfJm705HkCRJkiRJkiRJkiTNyqL3At5wvKZDl1W8Yy6BLYChXHMAjERgee3urON3ZzADsCxrWZY5REi7MnLePbQeFZYhDURIZ8A5sKKGBhHUcxnbMj8O7UDjEFsHNg0qQ1oB6zL+EIEdgBfgAXgEnsp8Tw0pW3WkYXAtWzJbcEkEswYugb+TcUEEugc2ZX3TvW1HDWdfBkRo0CC01ntYVlcGdg3cALfAP2pgW+COGkpW1kCtrOyOacV9u14Vlu24Bq6I6romAlsQ7Tfyuh1HIrCRCHB6J80Avz204eM/+XLd73Sf0bLCphv1lrj7bYj2PKe2Yl4fyvtPvL5b5mfkkePXbvpQf+gLEUa20Y4I5njTv6O25TNvb/pNz2c9KmxPBDZ9vQHu+QHHCg+uJ+r5LHnKo1Hz1nuPD98nmktgU7P+944kSZIkSZIkSZIkaWb+A1c0lLq86iehAAAAAElFTkSuQmCC" />
-            <path id="shapePath38" d="M359.703,439.971 L343.649,439.971 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill38);fill-opacity:1;" /><defs><pattern id="patternFill38" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(nan,nan,nan,nan,343.649,439.971)"><image id="patternImagepatternFill38_9" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath38" d="M359.703,439.971 L343.649,439.971 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill38);fill-opacity:1;" /><defs><pattern id="patternFill38" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill38_9" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath38" d="M351.649,435.971 L341.649,439.971 L351.649,443.971 L351.649,435.971 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape39">
             <desc shapeid="39" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-9.53203,-1.03536,19.064,2.0707)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="1" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,198.664,443.953)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" /><image id="shadowImage39" x="" y="" width="79" height="66" transform="matrix(1,0,0,1,158.186,412.244)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAABCCAYAAAAWqotYAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAcRJREFUeJzt2NtOwkAUheF/ShHBs+//liIgh+LFnp1uBoxeyLSa9SWTdirRsrLnJIiIiIiIiIiIiIiIiIiIiMivSkO/wE+M5SVT0QCORRudMYTXAJPcmtwADqF1jDDAIcNL9MHd5DbN/SOwB3a57bEAo+OFa9UqHSo8r7ApFtoCmAMzoMUC+ADW+brFKrAMxsPqilYlwLbGHwl8Tmux4G6BO+ARuMcCnGBBrYAl8J6fbbkcXkc/vOG8Iq9miPBarNrmWGBPwEu+enhb4I1+/iPfx6EbKy4Vz/5d5ZVz3AJ4AJ6BV/rwGmyoJmyu8/ku0VcXnFZdCv0U+lc1ROVNsCE7wwL0+c7nPLDAGk5D8aEZQ4nPY8X928rz6mvz1QPywDqs8nbY8N0VzcXFYpAtTe3Ki194B2ywhWGChTelD2+Zf7bJ/Y/8mfJ3xQA7Km5XaobnX+qAVdQqP9/n+7hN8WB9tfUty3fblar7vNqV5xWyzf0DFtKUfhh7wB7gmn74HrhskNNH7U1yXHHjkczvfaX0LYjPc3FOG40hThgpXGNrON9mlKeGUZ1vx/CPgeir9xlVaCIiIiIiIiIiIiIiIiIiIn/eJ3Y1ptokiUP5AAAAAElFTkSuQmCC" />
-            <path id="shapePath39" d="M208.196,442.981 C201.941,443.149 193.435,442.062 189.132,444.988 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill39);fill-opacity:1;" /><defs><pattern id="patternFill39" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,189.132,442.917)"><image id="patternImagepatternFill39_10" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath39" d="M208.196,442.981 C201.941,443.149 193.435,442.062 189.132,444.988 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill39);fill-opacity:1;" /><defs><pattern id="patternFill39" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill39_10" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath39" d="M195.988,439.244 L187.186,445.451 L197.841,447.026 L195.988,439.244 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
         <g id="Shape40">
             <desc shapeid="40" type="0" basicinfo-basictype="0" basicinfo-roundedrectradius="12" basicinfo-polygonsides="6" basicinfo-starpoints="5" bounding="rect(-117.666,-81.2722,235.332,162.544)" text="" font-familyname="Helvetica" font-pixelsize="20" font-bold="0" font-underline="0" font-alignment="1" strokestyle="1" markerstart="0" markerend="1" shadowenabled="0" shadowoffsetx="0" shadowoffsety="2" shadowblur="4" shadowopacity="160" blurenabled="0" blurradius="4" transform="matrix(1,0,0,1,131.098,363.716)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag="" />
-            <path id="shapePath40" d="M52.6761,444.988 C11.0004,427.506 8.08457,370.373 18.5621,332.612 C23.3398,327.455 28.5994,322.392 35.6191,320.572 C98.339,310.56 160.581,325.871 223.246,324.585 C224.915,321.008 232.104,321.534 235.287,318.565 C244.139,311.692 250.525,302.009 248.33,290.471 C238.574,284.723 223.624,286.764 216.223,282.444 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill40);fill-opacity:1;" /><defs><pattern id="patternFill40" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0" patterntransform="matrix(inf,nan,nan,inf,13.4325,282.444)"><image id="patternImagepatternFill40_11" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
+            <path id="shapePath40" d="M52.6761,444.988 C11.0004,427.506 8.08457,370.373 18.5621,332.612 C23.3398,327.455 28.5994,322.392 35.6191,320.572 C98.339,310.56 160.581,325.871 223.246,324.585 C224.915,321.008 232.104,321.534 235.287,318.565 C244.139,311.692 250.525,302.009 248.33,290.471 C238.574,284.723 223.624,286.764 216.223,282.444 " style="stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:url(#patternFill40);fill-opacity:1;" /><defs><pattern id="patternFill40" patternunits="userSpaceOnUse" x="0" y="0" width="0" height="0"><image id="patternImagepatternFill40_11" x="0" y="0" width="0" height="0" xlink:href="data:image/png;base64," /></pattern></defs>
             <path id="markerPath40" d="M225.026,280.862 L214.304,281.88 L222.771,288.537 L225.026,280.862 Z" style="stroke:none;fill-rule:evenodd;fill:#323232;fill-opacity:1;" />
         </g>
     </g>
@@ -1237,23 +1266,284 @@ seComunican(A, B) :- hablaCon(A, B).
   </script>
 </center>
 
-<ul>
-  <li>TBD visualización de árbol</li>
-</ul>
+<h2 id="el-rbol-de-backtracking">El árbol (de backtracking)</h2>
 
+<p>El recorrido hasta ahora se corresponde con un recorrido <a href="https://en.wikipedia.org/wiki/Depth-first_search">DFS</a> del árbol de ejecución.</p>
+
+<p>Una vez que se comprende que el lenguaje permite expresar en forma concisa algorítmo de <em>backtracking</em> se puede ver la ejecucíon de un programa desde otras perspectivas.</p>
+
+<p>Al fijar el goal inicial, se pueden tener las variables visibles al usuario de las cuales espera saber su valor en caso de encontrar una solución.</p>
+
+<p>En el ejemplo anterior</p>
+
+<p><strong>1)</strong> <code>seComunican(maría, A)</code> con <code>A = ?</code>.</p>
+
+<p>A continuación se puede dar un paso en resolver el <em>goal</em>. Esto se hace encontrando definiciones que unifican con la primer cláusla del <em>goal</em>. Como son reglas se deberá expandir el cuerpo de la misma como nuevo goal. Este proceso da varios resultados que eventualmente darán origen a las soluciones.</p>
+
+<p><strong>1.1)</strong> <code>telepatía(maría, A)</code> con <code>A = ?</code>.</p>
+
+<p><strong>1.2)</strong> <code>hablaCon(maría, A)</code> con <code>A = ?</code>.</p>
+
+<p>Cada vez que se usa una definición hay que tener en cuenta la sustitución de la unificación. La <code>A</code> de las definiciones se correspondian con <code>maría</code> y las <code>B</code> con las <code>A</code> del goal.</p>
+
+<p>Siguiendo con la rama <strong>1.1</strong>, se usa la definicón de un hecho. En este caso no se agrega ninguna cláusula dejando el goal vació <code>⟂</code> e indicando una solución al goal original.</p>
+
+<p><strong>1.1.1)</strong> <code>⟂</code> con <code>A = pedro</code>.</p>
+
+<p>Entonces cada vez que se encuentra una definición para la primer claúsula, se la reemplaza por la parte derecha de la misma. Si en algún momento no se puede reemplazar la cláusula esa rama falla.</p>
+
+<p>La rama <em>1.2</em> da origen a:</p>
+
+<p><strong>1.2.1)</strong> <code>habla(maría, I), habla(A, I), maría \= A</code> con <code>A = ?</code>.</p>
+
+<p>Como solo hay un hecho que unifica con <code>habla(mareia, I)</code> la rama <em>1.2.1</em> da origen a:</p>
+
+<p><strong>1.2.1.1)</strong> <code>habla(A, inglés), maría \= A</code> con <code>A = ?</code>.</p>
+
+<p>Notar que ya no importa por qué se busca alguién que hable inglés.</p>
+
+<p>Como hay dos hechos que unifican con <code>habla(A, inglés)</code> la última rama da origen a:</p>
+
+<p><strong>1.2.1.1.1)</strong> <code>maría \= juan</code> con <code>A = juan</code>.</p>
+
+<p><strong>1.2.1.1.2)</strong> <code>maría \= maría</code> con <code>A = maría</code>.</p>
+
+<p>La primera reduce a:</p>
+
+<p><strong>1.2.1.1.1.1)</strong> <code>⟂</code> con  <code>A = juan</code>.</p>
+
+<p>mientras que la segunda falla.</p>
+
+<p>A continuación se muestra el árbol completo. Al hacer click en los nodos se muestra la información que se usó para ese paso.</p>
+
+<style>
+
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 3px;
+	}
+
+  .node.success circle {
+    stroke: lightgreen;
+  }
+
+  .node.fail circle {
+    stroke: red;
+  }
+
+	.node text { font: 1em 'Lato' }
+
+  .node { cursor: pointer; }
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+
+</style>
+
+<svg id="tree">
+</svg>
+
+<script>
+var treeData = [
+  {
+    "name": "seComunican(maría, A)",
+    "parent": "null",
+    "children": [
+      {
+        "name": "telepatía(maría, A)",
+        "parent": "seComunican(maría, A)",
+        "children": [
+          {
+            "name": "⟂ con A = pedro",
+            "parent": "telepatía(maría, A)",
+            "kind": "success"
+          }
+        ]
+      },
+      {
+        "name": "hablaCon(maría, A)",
+        "parent": "seComunican(maría, A)",
+        "children": [
+          {
+            "name": "habla(maría, I), habla(A, I), maría \\= A",
+            "parent": "hablaCon(maría, A)",
+            "children": [
+              {
+                "name": "habla(A, inglés), maría \\= A",
+                "parent": "habla(maría, I), habla(A, I), maría \\= A",
+                "children": [
+
+                  {
+                    "name": "maría \\= juan",
+                    "parent": "habla(A, inglés), maría \\= A",
+                    "children": [
+                      {
+                        "name": "⟂ con A = juan",
+                        "parent": "maría \\= juan",
+                        "kind": "success"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "maría \\= maría",
+                    "parent": "habla(A, inglés), maría \\= A",
+                    "children": [
+                      {
+                        "name": "falla",
+                        "parent": "maría \\= maría",
+                        "kind": "fail"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 40, right: 120, bottom: 20, left: 120},
+	width = 960 - margin.right - margin.left,
+	height = 570 - margin.top - margin.bottom;
+
+var i = 0;
+
+var tree = d3.layout.tree()
+	.size([height, width]);
+
+var showingAll = true;
+
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) {
+    if (showingAll) {
+      return [d.x, d.y];
+    } else {
+      return [root.x, d.y];
+    }
+  });
+
+var svg = d3.select("#tree")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+
+update(root);
+
+function update(source) {
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+  var link;
+
+  var selectedLinks;
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 100; });
+
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  var showBranchOnly = function(d) {
+    svg.selectAll(".node").classed("hide", true).classed("keep", false);
+    var current = d;
+    while (current != null) {
+      svg.selectAll(".node-" + current.id)
+        .classed("keep", true)
+        .classed("hide", false);
+      current = current.parent;
+    }
+
+    svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+      .style("opacity",0).each("end", function(){
+        link.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+        svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+          .attr("transform", function(d) {
+            return "translate(" + root.x + "," + d.y + ")";
+          });
+      });
+
+  };
+
+  var showAll = function() {
+
+    link.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+    svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+      .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      }).each("end", function(){
+
+        svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+          .style("opacity",1);
+
+        // svg.selectAll("path.link").transition().duration(ANIMATION/2)
+        //   .style("opacity",1);
+
+        svg.selectAll(".node").classed("hide", false).classed("keep", false);
+      });
+  };
+
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", function(d) { return "node node-" + d.id + " " + d.kind; })
+	  .attr("transform", function(d) {
+		  return "translate(" + d.x + "," + d.y + ")"; })
+    .on("click", function(d) {
+      showingAll = !showingAll;
+      if (!showingAll)
+        showBranchOnly(d);
+      else
+        showAll(d);
+    });
+
+  nodeEnter.append("circle")
+	  .attr("r", 10)
+	  .style("fill", "#fff");
+
+
+  nodeEnter.append("text")
+	  .attr("y", function(d) {
+		  return d.children || d._children ? -22 : 22; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", "middle")
+	  .text(function(d) { return d.name; })
+	  .style("fill-opacity", 1)
+
+  // Declare the links…
+  link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+
+  // Enter the links.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", diagonal);
+}
+</script>
+
+<!--
 <pre>
 interprete(A, P, Q) :- hablaCon(A, P), hablaCon(A, Q), P \= Q.
-</pre>
-
-<ul>
-  <li>TBD árbol con reglas</li>
-</ul>
-
-<p>–</p>
+</pre> -->
 
 <h2 id="referencias">Referencias</h2>
 
 <ul>
+  <li><a href="http://www.dc.uba.ar/materias/plp">http://www.dc.uba.ar/materias/plp</a></li>
+  <li><a href="http://www.swi-prolog.org/">http://www.swi-prolog.org/</a></li>
   <li><a href="http://www.amzi.com/AdventureInProlog">http://www.amzi.com/AdventureInProlog</a></li>
 </ul>
 
