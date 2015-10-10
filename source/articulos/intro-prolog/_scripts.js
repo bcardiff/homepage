@@ -16,6 +16,22 @@ $(function(){
   // $("a[href^='javascript:highlight']").mouseenter(function(){
   //   eval($(this).attr('href'));
   // });
+
+  var links = $(".content a[href^='javascript']");
+  $(links[0]).addClass("next");
+
+  $(links).click(function(){
+    var _this = $(this);
+    links.removeClass("next")
+    for(var i = 0; i < links.length; i++) {
+      if (links[i] == this) {
+        pause(function(){
+          $(links[i+1]).addClass("next");
+        });
+        return;
+      }
+    }
+  });
 });
 
 var animating = false;

@@ -1,0 +1,53 @@
+
+## El árbol (de backtracking)
+
+El recorrido hasta ahora se corresponde con un recorrido [DFS](https://en.wikipedia.org/wiki/Depth-first_search) del árbol de ejecución.
+
+Una vez que se comprende que el lenguaje permite expresar en forma concisa algorítmo de _backtracking_ se puede ver la ejecucíon de un programa desde otras perspectivas.
+
+Al fijar el goal inicial, se pueden tener las variables visibles al usuario de las cuales espera saber su valor en caso de encontrar una solución.
+
+En el ejemplo anterior
+
+  **1)** `seComunican(maría, A)` con `A = ?`.
+
+A continuación se puede dar un paso en resolver el _goal_. Esto se hace encontrando definiciones que unifican con la primer cláusla del _goal_. Como son reglas se deberá expandir el cuerpo de la misma como nuevo goal. Este proceso da varios resultados que eventualmente darán origen a las soluciones.
+
+  **1.1)** `telepatía(maría, A)` con `A = ?`.
+
+  **1.2)** `hablaCon(maría, A)` con `A = ?`.
+
+Cada vez que se usa una definición hay que tener en cuenta la sustitución de la unificación. La `A` de las definiciones se correspondian con `maría` y las `B` con las `A` del goal.
+
+Siguiendo con la rama **1.1**, se usa la definicón de un hecho. En este caso no se agrega ninguna cláusula dejando el goal vació `⟂` e indicando una solución al goal original.
+
+  **1.1.1)** `⟂` con `A = pedro`.
+
+Entonces cada vez que se encuentra una definición para la primer claúsula, se la reemplaza por la parte derecha de la misma. Si en algún momento no se puede reemplazar la cláusula esa rama falla.
+
+La rama *1.2* da origen a:
+
+  **1.2.1)** `habla(maría, I), habla(A, I), maría \= A` con `A = ?`.
+
+Como solo hay un hecho que unifica con `habla(mareia, I)` la rama *1.2.1* da origen a:
+
+  **1.2.1.1)** `habla(A, inglés), maría \= A` con `A = ?`.
+
+Notar que ya no importa por qué se busca alguién que hable inglés.
+
+Como hay dos hechos que unifican con `habla(A, inglés)` la última rama da origen a:
+
+  **1.2.1.1.1)** `maría \= juan` con `A = juan`.
+
+  **1.2.1.1.2)** `maría \= maría` con `A = maría`.
+
+La primera reduce a:
+
+  **1.2.1.1.1.1)** `⟂` con  `A = juan`.
+
+mientras que la segunda falla.
+
+<!--
+<pre>
+interprete(A, P, Q) :- hablaCon(A, P), hablaCon(A, Q), P \= Q.
+</pre> -->
