@@ -29,6 +29,22 @@ h1::before {
 
   pre {
     border: 1px solid black;
-    padding: 0.4em 0;
+    padding: 0.4em 0.1em;
+  }
+
+  & > pre {
+    border: 0px;
+    padding: 0.4em 1em;
+    margin: 0 -1em;
+    background-color: #ddd;
+  }
+
+  h2 {
+    margin-top: 1em;
+  }
+
+  .box {
+    background-color: #efefef;
+    padding: 1em;
   }
 }

@@ -1,0 +1,112 @@
+## Reglas
+
+La definición de predicados pueden ser, además de *hechos*, reglas.
+Por ejemplo podríamos definir el predicado `hablaCon/2` que represente si dos personas pueden hablar directamente una con la otra. El `/2` indica que es un predicado binario.
+
+<pre>
+hablaCon(A, B) :- habla(A, I), habla(B, I), A \= B.
+</pre>
+
+Tal como un predicado puede constar de multiples definiciones de hechos, lo mismo sucede con las definiciones de reglas.
+
+<pre>
+telepatía(maría, pedro).
+
+seComunican(A, B) :- telepatía(A, B).
+seComunican(A, B) :- hablaCon(A, B).
+</pre>
+
+De esta forma `A` y `B` se comunican si tienen telepatía entre ellos o si pueden hablar (por compartir un idioma común).
+
+Si bien no se exhibe, un predicado puede definirse en forma mezclada por hechos y reglas.
+
+Cuando una cláusula que se intenta resolver corresponde a un predicado con múltiples definiciones ser van iterando por las disintas definiciones que unifican. En los ejemplos anteriores eran hechos y por ende se resolvían directamente. Cuando la definición es una regla, se expanden las cláusulas
+
+Al principio se intentará resolver usando [la primera](javascript:g4s1()) definición. En este caso queda como nuevo goal, luego de unificar y sustituir los parámetros, `telepatía(maría, A)`.
+
+En la búsqueda de otra solución se pasará, luego de que se propaguen los _fail_, a [la segunda](javascript:g4s2()) definición. Para resolverla se terminará usando la [única regla](javascript:g4s3()) para `hablaCon(maría, A)`.
+
+<center id="g4" class="graph">
+  <div style="text-align: left; float: left;">
+    <code class="l1">habla(juan, ruso).</code><br/>
+    <code class="l2">habla(juan, inglés).</code><br/>
+    <code class="l3">habla(maría, inglés).</code><br/>
+    <code class="l4">habla(pedro, ruso).</code><br/>
+    <br/>
+    <code class="l5">hablaCon(A, B) :- habla(A, I), habla(B, I), A \= B.</code><br/>
+    <br/>
+    <code class="l6">telepatía(maría, pedro).</code><br/>
+    <br/>
+    <code class="l7">seComunican(A, B) :- telepatía(A, B).</code><br/>
+    <code class="l8">seComunican(A, B) :- hablaCon(A, B).</code><br/>
+    <br/>
+    <code class="l9">?- seComunican(maría, A).</code><br/>
+
+  </div>
+  <%= embed_svg "program-rules.svg" %>
+  <script>
+  g4 = d3.select("#g4 svg");
+  g4_l1 = g4.selectAll("#Layer1");
+  g4_l2 = g4.selectAll("#Layer2").style("opacity", 0);
+  g4_l3 = g4.selectAll("#Layer3").style("opacity", 0);
+  g4_l4 = g4.selectAll("#Layer4").style("opacity", 0);
+  c4 = $("#g4");
+
+  function uncover(obj, callback) {
+    obj.transition()
+      .duration(ANIMATION).style("opacity", 1)
+      .each("end", function(){
+        if (callback) { callback(); }
+      });
+  }
+
+  function cover(obj, callback) {
+    obj.transition()
+      .duration(ANIMATION).style("opacity", 0)
+      .each("end", function(){
+        if (callback) { callback(); }
+      });
+  }
+
+  function g4s1(callback) {
+    setCursor(".l7", c4);
+    pause(function(){
+      uncover(g4_l2, function(){
+        pause(callback);
+      });
+    });
+  }
+
+  function g4s2(callback) {
+    cover(g4_l2, function(){
+      setCursor(".l8", c4);
+      pause(function(){
+        uncover(g4_l3, function(){
+          pause(callback);
+        });
+      });
+    });
+  }
+
+  function g4s3(callback) {
+    setCursor(".l5", c4);
+    pause(function(){
+      uncover(g4_l4, function(){
+        pause(callback);
+      });
+    });
+  }
+
+  // g4s1(function(){ g4s2(g4s3); });
+  </script>
+</center>
+
+
+
+* TBD visualización de árbol
+
+<pre>
+interprete(A, P, Q) :- hablaCon(A, P), hablaCon(A, Q), P \= Q.
+</pre>
+
+* TBD árbol con reglas

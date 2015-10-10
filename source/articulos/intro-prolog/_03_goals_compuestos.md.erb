@@ -8,8 +8,8 @@ Las consultas pueden estar formadas por más de una cláusula.
 
 Siguiendo con la analogía de las cláusulas como cajas, cada vez que se obtenga un resultado para la primera, se buscarán los resultados de la segunda. Es importante notar que cada clásula se resuelve teniendo en cuenta *todas* las definiciones y el valor de las variables en ese momento.
 
-<center id="g3">
-  <div style="float:left; text-align: left; font-size: 0.8em;">
+<center id="g3" class="graph">
+  <div style="float:left;font-size: 0.7em">
     <code class="l1">habla(juan, ruso).</code><br/>
     <code class="l2">habla(juan, inglés).</code><br/>
     <code class="l3">habla(maría, inglés).</code><br/>
@@ -17,7 +17,7 @@ Siguiendo con la analogía de las cláusulas como cajas, cada vez que se obtenga
     <br/>
     <code class="l5">?- habla(A, I), habla(B, I).</code><br/>
   </div>
-  <div style="float:left; text-align: left; font-size: 0.8em;">
+  <div style="float:left;font-size: 0.7em">
     <code class="l6">A = juan, B = juan, I = ruso;</code><br/>
     <code class="l7">A = juan, B = pedro, I = ruso;</code><br/>
     <code class="l8">A = juan, B = juan, I = inglés;</code><br/>
@@ -365,22 +365,8 @@ Siguiendo con la analogía de las cláusulas como cajas, cada vez que se obtenga
   [<%=w%>](javascript:g3g(<%=i+1%>))
 <% end %>.
 
-* TBD operador \\=
+Para evitar las soluciones que se refieren a la misma persona se podría agregar la cláusa `A \= B` al final. Dicha cláusula tendrá solución si los valores son distintos.
 
 <pre>
 ?- habla(A, I), habla(B, I), A \= B.
 </pre>
-
-* TBD reglas
-
-<pre>
-hablaCon(A, B) :- habla(A, I), habla(B, I), A \= B.
-</pre>
-
-* TBD visualización de árbol
-
-<pre>
-interprete(A, P, Q) :- hablaCon(A, P), hablaCon(A, Q), P \= Q.
-</pre>
-
-* TBD árbol con reglas
