@@ -1318,7 +1318,7 @@ seComunican(A, B) :- hablaCon(A, B).
 
 <style>
 
-	.node circle {
+	.node circle, .res circle {
 	  fill: #fff;
 	  stroke: steelblue;
 	  stroke-width: 3px;
@@ -1332,11 +1332,12 @@ seComunican(A, B) :- hablaCon(A, B).
     stroke: red;
   }
 
-	.node text { font: 1em 'Lato' }
+  .node text { font: 1em 'Lato'; font-weight: 300; }
+	.res text { font: 0.9em 'Lato'; font-weight: 300; }
 
   .node { cursor: pointer; }
 
-	.link {
+	.link, .linkBranch, .linkRes {
 	  fill: none;
 	  stroke: #ccc;
 	  stroke-width: 2px;
@@ -1355,47 +1356,56 @@ var treeData = [
     "children": [
       {
         "name": "telepatía(maría, A)",
-        "parent": "seComunican(maría, A)",
+        "rule": "seComunican(A₁, B₁) :- telepatía(A₁, B₁).",
+        "unification": "A₁ ← maría, B₁ ← A",
         "children": [
           {
             "name": "⟂ con A = pedro",
-            "parent": "telepatía(maría, A)",
-            "kind": "success"
+            "kind": "success",
+            "rule": "telepatía(maría, pedro).",
+            "unification": "A ← pedro",
           }
         ]
       },
       {
         "name": "hablaCon(maría, A)",
-        "parent": "seComunican(maría, A)",
+        "rule": "seComunican(A₂, B₂) :- hablaCon(A₂, B₂).",
+        "unification": "A₂ ← maría, B₂ ← A",
         "children": [
           {
-            "name": "habla(maría, I), habla(A, I), maría \\= A",
-            "parent": "hablaCon(maría, A)",
+            "name": "habla(maría, I₃), habla(A, I₃), maría \\= A",
+            "rule": "hablaCon(A₃, B₃) :- habla(A₃, I₃), habla(B₃, I₃), A₃ \\= B₃.",
+            "unification": "A₃ ← maría, B₃ ← A",
             "children": [
               {
                 "name": "habla(A, inglés), maría \\= A",
-                "parent": "habla(maría, I), habla(A, I), maría \\= A",
+                "rule": "habla(maría, inglés).",
+                "unification": "I₃ ← inglés",
                 "children": [
-
                   {
                     "name": "maría \\= juan",
-                    "parent": "habla(A, inglés), maría \\= A",
+                    "rule": "habla(juan, inglés).",
+                    "unification": "A ← juan",
                     "children": [
                       {
                         "name": "⟂ con A = juan",
-                        "parent": "maría \\= juan",
-                        "kind": "success"
+                        "kind": "success",
+                        "rule": "\\=",
+                        "unification": "verdadero"
                       }
                     ]
                   },
                   {
                     "name": "maría \\= maría",
-                    "parent": "habla(A, inglés), maría \\= A",
+                    "rule": "habla(maría, inglés).",
+                    "unification": "A ← maría",
                     "children": [
                       {
                         "name": "falla",
                         "parent": "maría \\= maría",
-                        "kind": "fail"
+                        "kind": "fail",
+                        "rule": "\\=",
+                        "unification": "falso"
                       }
                     ]
                   }
@@ -1414,6 +1424,9 @@ var margin = {top: 40, right: 120, bottom: 20, left: 120},
 	width = 960 - margin.right - margin.left,
 	height = 570 - margin.top - margin.bottom;
 
+var resolutionSpineX = 330;
+var resSeparation = 110;
+
 var i = 0;
 
 var tree = d3.layout.tree()
@@ -1423,11 +1436,12 @@ var showingAll = true;
 
 var diagonal = d3.svg.diagonal()
 	.projection(function(d) {
-    if (showingAll) {
-      return [d.x, d.y];
-    } else {
-      return [root.x, d.y];
-    }
+    return [d.x, d.y];
+  });
+
+var diagonalBranch = d3.svg.diagonal()
+	.projection(function(d) {
+    return [resolutionSpineX, d.y];
   });
 
 var svg = d3.select("#tree")
@@ -1447,7 +1461,8 @@ function update(source) {
 	  links = tree.links(nodes);
   var link;
 
-  var selectedLinks;
+  var selectedLink;
+  var resLink;
 
   // Normalize for fixed-depth.
   nodes.forEach(function(d) { d.y = d.depth * 100; });
@@ -1458,42 +1473,114 @@ function update(source) {
 
   var showBranchOnly = function(d) {
     svg.selectAll(".node").classed("hide", true).classed("keep", false);
+
     var current = d;
+    var branchLinks = [];
     while (current != null) {
+      if (current.parent != null && current.parent.parent != null) {
+        branchLinks.push({source: current.parent, target: current});
+      }
       svg.selectAll(".node-" + current.id)
         .classed("keep", true)
         .classed("hide", false);
       current = current.parent;
     }
 
+    // Declare the links…
+    selectedLink = svg.selectAll("path.linkBranch")
+  	  .data(branchLinks, function(d) { return d.target.id; });
+
+    // Enter the links.
+    selectedLink.enter().insert("path", "g")
+  	  .attr("class", "linkBranch")
+  	  .attr("d", diagonal);
+
+    link.transition().duration(ANIMATION/2).style("opacity",0);
+
     svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
       .style("opacity",0).each("end", function(){
-        link.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+        selectedLink.transition().duration(ANIMATION/2).attr("d", diagonalBranch);
 
         svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
           .attr("transform", function(d) {
-            return "translate(" + root.x + "," + d.y + ")";
+            return "translate(" + resolutionSpineX + "," + d.y + ")";
+          }).each("end", function(){
+            var resVSep = 25;
+
+            svg.selectAll("path.linkRes")
+              .data(branchLinks)
+              .enter()
+                .insert("path", "g")
+                .attr("class", "linkRes")
+                .attr("d", function(d){ return diagonal({
+                  source: {x: resolutionSpineX - resSeparation, y: d.source.y + resVSep},
+                  target: {x: resolutionSpineX, y: d.target.y}
+                })})
+                .style("opacity",0)
+                .transition().duration(ANIMATION/2).style("opacity",1);
+
+            var resEnter = svg.selectAll("g.res").data(branchLinks)
+              .enter().append("g")
+          	  .attr("class", "res")
+          	  .attr("transform", function(d) {
+          		  return "translate(" + (resolutionSpineX-resSeparation) + "," + (d.source.y+resVSep) + ")"; })
+
+            resEnter.style("opacity",0);
+
+            resEnter.append("circle")
+          	  .attr("r", 5)
+          	  .style("fill", "#fff");
+
+            resText = resEnter.append("text")
+              .attr("x", -12)
+          	  .attr("y", -22)
+          	  .attr("dy", ".35em")
+          	  .attr("text-anchor", "end");
+
+            resText.append("tspan")
+          	  .text(function(d) { return d.target.rule; })
+          	  .style("fill-opacity", 1);
+
+            resText.append("tspan")
+              .attr('x', -12)
+              .attr('dy', 22)
+          	  .text(function(d) { return d.target.unification; })
+          	  .style("fill-opacity", 1);
+
+            resEnter.transition().duration(ANIMATION/2).style("opacity",1);
+
           });
       });
 
   };
 
   var showAll = function() {
+    resLink = svg.selectAll("path.linkRes, g.res");
 
-    link.transition().duration(ANIMATION/2).attr("d", diagonal);
+    resLink.transition().duration(ANIMATION/2)
+      .style("opacity",0).each("end", function(){
 
-    svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
-      .attr("transform", function(d) {
-        return "translate(" + d.x + "," + d.y + ")";
-      }).each("end", function(){
+        resLink.remove();
 
-        svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
-          .style("opacity",1);
+        selectedLink.transition().duration(ANIMATION/2).attr("d", diagonal);
 
-        // svg.selectAll("path.link").transition().duration(ANIMATION/2)
-        //   .style("opacity",1);
+        svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+          .attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+          }).each("end", function(){
 
-        svg.selectAll(".node").classed("hide", false).classed("keep", false);
+            svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+              .style("opacity",1);
+
+            link.transition().duration(ANIMATION/2)
+              .style("opacity",1).each("end", function(){
+                selectedLink.remove();
+              });
+
+            svg.selectAll(".node").classed("hide", false).classed("keep", false);
+
+          });
       });
   };
 
