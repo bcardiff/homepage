@@ -6,6 +6,7 @@ title: Brian J. Cardiff
 [@github](//github.com/bcardiff)
 [@twitter](//twitter.com/bcardiff)
 [@keybase](//keybase.io/bcardiff)
+[@8tracks](//8tracks.com/bcardiff)
 
 ## Artículos
 
