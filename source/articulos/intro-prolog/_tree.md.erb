@@ -240,30 +240,38 @@ function update(source) {
   var showAll = function() {
     resLink = svg.selectAll("path.linkRes, g.res");
 
-    resLink.transition().duration(ANIMATION/2)
-      .style("opacity",0).each("end", function(){
+    function showNodes() {
+      svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
+        .attr("transform", function(d) {
+          return "translate(" + d.x + "," + d.y + ")";
+        }).each("end", function(){
 
-        resLink.remove();
+          svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
+            .style("opacity",1);
 
-        selectedLink.transition().duration(ANIMATION/2).attr("d", diagonal);
+          link.transition().duration(ANIMATION/2)
+            .style("opacity",1).each("end", function(){
+              selectedLink.remove();
+            });
 
-        svg.selectAll(".node.keep").transition().duration(ANIMATION/2)
-          .attr("transform", function(d) {
-            return "translate(" + d.x + "," + d.y + ")";
-          }).each("end", function(){
+          svg.selectAll(".node").classed("hide", false).classed("keep", false);
 
-            svg.selectAll(".node.hide").transition().duration(ANIMATION/2)
-              .style("opacity",1);
+        });
+    }
 
-            link.transition().duration(ANIMATION/2)
-              .style("opacity",1).each("end", function(){
-                selectedLink.remove();
-              });
+    if (resLink.empty()) {
+      showNodes();
+    } else {
+      resLink.transition().duration(ANIMATION/2)
+        .style("opacity",0).each("end", function(){
 
-            svg.selectAll(".node").classed("hide", false).classed("keep", false);
+          resLink.remove();
 
-          });
-      });
+          selectedLink.transition().duration(ANIMATION/2).attr("d", diagonal);
+
+          showNodes();
+        });
+    }
   };
 
   // Enter the nodes.
