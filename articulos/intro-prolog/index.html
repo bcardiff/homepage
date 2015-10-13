@@ -233,7 +233,7 @@ function pause(callback) {
   </script>
 </center>
 
-<p>Al <a href="#ref:g1_call">iniciar la búsqueda</a> se usarán las reglas definidas para obtener <a href="#ref:g1_exit">una primera solución</a>. A continuación el usuario podrá, luego de analizar la solución, <a href="#ref:g1_redo">pedir otra</a>. El programa mantiene un estado para seguir con la búsqueda. Suponiendo que exista una segunda solución, se informa <a href="#ref:g1_exit">de la misma manera</a> y el se podrá <a href="#ref:g1_redo">repetir</a> <a href="#ref:g1_exit">el</a> <a href="#ref:g1_redo">proceso</a>. Eventualmente (si todo funciona bien) el programa indicará que <a href="#ref:g1_fail">no hay más soluciones</a>.</p>
+<p>Al <a href="#ref:g1_call">iniciar la búsqueda</a> se usarán las reglas definidas para obtener <a href="#ref:g1_exit">una primera solución</a>. A continuación el usuario podrá, luego de analizar la solución, <a href="#ref:g1_redo">pedir otra</a>. El programa mantiene un estado para seguir con la búsqueda. Suponiendo que exista una segunda solución, se informa <a href="#ref:g1_exit">de la misma manera</a> y se podrá <a href="#ref:g1_redo">repetir</a> <a href="#ref:g1_exit">el</a> <a href="#ref:g1_redo">proceso</a>. Eventualmente (si todo funciona bien) el programa indicará que <a href="#ref:g1_fail">no hay más soluciones</a>.</p>
 
 <p>Ésta es la manera en la que el usuario interactura con un intérprete de Prolog. Veremos también que es una forma de entender cómo funciona un programa paso a paso.</p>
 
@@ -260,7 +260,7 @@ habla(pedro, ruso).
 
 <p>En un <a href="javascript:g2s1()">primer paso</a> se inicializa la consulta y el cursor se ubicará en la definición del primer hecho, que, como coincide con <code>habla(X, ruso)</code>, se <strong>unifica</strong> <code>X=juan</code> obteniendo la primer solución.</p>
 
-<p>Luego el usuario podrá pedir una <a href="javascript:g2s2()">segunda solución</a>. A continuación se buscarán las siguientes definiciones que puedan unicar con <code>habla(X, ruso)</code>. Esto se logra recién en la última definición. Dando lugar al <a href="javascript:g2s3()">segundo resultado</a> unificando ahora <code>X=pedro</code>. Notar que cada solución tiene una instanción distinta en las variables.</p>
+<p>Luego el usuario podrá pedir una <a href="javascript:g2s2()">segunda solución</a>. A continuación se buscarán las siguientes definiciones que puedan unicar con <code>habla(X, ruso)</code>. Esto se logra recién en la última definición, dando lugar al <a href="javascript:g2s3()">segundo resultado</a>, unificando ahora <code>X=pedro</code>. Notar que cada solución tiene una instanciación distinta en las variables.</p>
 
 <p>Al pedir una <a href="javascript:g2s4()">tercera solución</a> no se encontrarán más definiciones que unifiquen con el objetivo y se informará que no hay más soluciones.</p>
 
@@ -997,7 +997,7 @@ seComunican(A, B) :- hablaCon(A, B).
 
 <p>Si bien no se exhibe, un predicado puede definirse en forma mezclada por hechos y reglas.</p>
 
-<p>Cuando una cláusula que se intenta resolver corresponde a un predicado con múltiples definiciones ser van iterando por las disintas definiciones que unifican. En los ejemplos anteriores eran hechos y por ende se resolvían directamente. Cuando la definición es una regla, se expanden las cláusulas</p>
+<p>Cuando una cláusula que se intenta resolver corresponde a un predicado con múltiples definiciones se van iterando por las disintas definiciones que unifican. En los ejemplos anteriores eran hechos y por ende se resolvían directamente. Cuando la definición es una regla, se expanden las cláusulas</p>
 
 <p>Al principio se intentará resolver usando <a href="javascript:g4s1()">la primera</a> definición. En este caso queda como nuevo goal, luego de unificar y sustituir los parámetros, <code>telepatía(maría, A)</code>.</p>
 
@@ -1286,7 +1286,7 @@ seComunican(A, B) :- hablaCon(A, B).
 
 <p>Cada vez que se usa una definición hay que tener en cuenta la sustitución de la unificación. La <code>A</code> de las definiciones se correspondian con <code>maría</code> y las <code>B</code> con las <code>A</code> del goal.</p>
 
-<p>Siguiendo con la rama <strong>1.1</strong>, se usa la definicón de un hecho. En este caso no se agrega ninguna cláusula dejando el goal vació <code>⟂</code> e indicando una solución al goal original.</p>
+<p>Siguiendo con la rama <strong>1.1</strong>, se usa la definición de un hecho. En este caso no se agrega ninguna cláusula dejando el goal vació <code>⟂</code> e indicando una solución al goal original.</p>
 
 <p><strong>1.1.1)</strong> <code>⟂</code> con <code>A = pedro</code>.</p>
 
@@ -1296,7 +1296,7 @@ seComunican(A, B) :- hablaCon(A, B).
 
 <p><strong>1.2.1)</strong> <code>habla(maría, I), habla(A, I), maría \= A</code> con <code>A = ?</code>.</p>
 
-<p>Como solo hay un hecho que unifica con <code>habla(mareia, I)</code> la rama <em>1.2.1</em> da origen a:</p>
+<p>Como solo hay un hecho que unifica con <code>habla(maría, I)</code> la rama <em>1.2.1</em> da origen a:</p>
 
 <p><strong>1.2.1.1)</strong> <code>habla(A, inglés), maría \= A</code> con <code>A = ?</code>.</p>
 
