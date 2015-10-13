@@ -34,39 +34,51 @@
 var treeData = [
   {
     "name": "seComunican(maría, A)",
+    "resolutionName": "¬ seComunican(maría, A)",
     "parent": "null",
     "children": [
       {
         "name": "telepatía(maría, A)",
+        "resolutionName": "¬ telepatía(maría, A)",
         "rule": "seComunican(A₁, B₁) :- telepatía(A₁, B₁).",
+        "resolutionRule": "seComunican(A₁, B₁), ¬ telepatía(A₁, B₁)",
         "unification": "A₁ ← maría, B₁ ← A",
         "children": [
           {
             "name": "⟂ con A = pedro",
             "kind": "success",
             "rule": "telepatía(maría, pedro).",
+            "resolutionRule": "telepatía(maría, pedro)",
             "unification": "A ← pedro",
           }
         ]
       },
       {
         "name": "hablaCon(maría, A)",
+        "resolutionName": "¬ hablaCon(maría, A)",
         "rule": "seComunican(A₂, B₂) :- hablaCon(A₂, B₂).",
+        "resolutionRule": "seComunican(A₂, B₂), ¬ hablaCon(A₂, B₂)",
         "unification": "A₂ ← maría, B₂ ← A",
         "children": [
           {
             "name": "habla(maría, I₃), habla(A, I₃), maría \\= A",
+            "resolutionName": "¬ habla(maría, I₃), ¬ habla(A, I₃), ¬ maría \\= A\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u200B",
             "rule": "hablaCon(A₃, B₃) :- habla(A₃, I₃), habla(B₃, I₃), A₃ \\= B₃.",
+            "resolutionRule": "hablaCon(A₃, B₃), ¬ habla(A₃, I₃), ¬ habla(B₃, I₃), ¬ A₃ \\= B₃",
             "unification": "A₃ ← maría, B₃ ← A",
             "children": [
               {
                 "name": "habla(A, inglés), maría \\= A",
+                "resolutionName": "¬ habla(A, inglés), ¬ maría \\= A",
                 "rule": "habla(maría, inglés).",
+                "resolutionRule": "habla(maría, inglés)",
                 "unification": "I₃ ← inglés",
                 "children": [
                   {
                     "name": "maría \\= juan",
+                    "resolutionName": "¬ maría \\= juan",
                     "rule": "habla(juan, inglés).",
+                    "resolutionRule": "habla(juan, inglés)",
                     "unification": "A ← juan",
                     "children": [
                       {
@@ -79,12 +91,13 @@ var treeData = [
                   },
                   {
                     "name": "maría \\= maría",
+                    "resolutionName": "¬ maría \\= maría",
                     "rule": "habla(maría, inglés).",
+                    "resolutionRule": "habla(maría, inglés)",
                     "unification": "A ← maría",
                     "children": [
                       {
                         "name": "falla",
-                        "parent": "maría \\= maría",
                         "kind": "fail",
                         "rule": "\\=",
                         "unification": "falso"
@@ -107,7 +120,7 @@ var margin = {top: 40, right: 80, bottom: 20, left: 80},
 	height = 570 - margin.top - margin.bottom;
 
 var resolutionSpineX = 390;
-var resSeparation = 110;
+var resSeparation = 107;
 
 var i = 0;
 
@@ -145,6 +158,7 @@ function update(source) {
 
   var selectedLink;
   var resLink;
+  var resNodes;
 
   // Normalize for fixed-depth.
   nodes.forEach(function(d) { d.y = d.depth * 100; });
@@ -152,6 +166,10 @@ function update(source) {
   // Declare the nodes…
   var node = svg.selectAll("g.node")
 	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  showingResolution = false;
+  var nodeText = function(d) { return showingResolution ? d.resolutionName || d.name : d.name; };
+  var nodeResText = function(d) { return showingResolution ? d.target.resolutionRule || d.target.rule : d.target.rule; };
 
   var showBranchOnly = function(d) {
     svg.selectAll(".node").classed("hide", true).classed("keep", false);
@@ -202,7 +220,9 @@ function update(source) {
                 .style("opacity",0)
                 .transition().duration(ANIMATION/2).style("opacity",1);
 
-            var resEnter = svg.selectAll("g.res").data(branchLinks)
+            resNodes = svg.selectAll("g.res").data(branchLinks);
+
+            var resEnter = resNodes
               .enter().append("g")
           	  .attr("class", "res")
           	  .attr("transform", function(d) {
@@ -221,7 +241,8 @@ function update(source) {
           	  .attr("text-anchor", "end");
 
             resText.append("tspan")
-          	  .text(function(d) { return d.target.rule; })
+              .attr("class", "rule")
+          	  .text(nodeResText)
           	  .style("fill-opacity", 1);
 
             resText.append("tspan")
@@ -238,6 +259,8 @@ function update(source) {
   };
 
   var showAll = function() {
+    resNodes = null;
+
     resLink = svg.selectAll("path.linkRes, g.res");
 
     function showNodes() {
@@ -274,6 +297,12 @@ function update(source) {
     }
   };
 
+  window.toggleResolution = function() {
+    showingResolution = !showingResolution;
+    node.select("text").text(nodeText);
+    resNodes.select("text tspan.rule").text(nodeResText);
+  }
+
   // Enter the nodes.
   var nodeEnter = node.enter().append("g")
 	  .attr("class", function(d) { return "node node-" + d.id + " " + d.kind; })
@@ -297,7 +326,7 @@ function update(source) {
 		  return d.children || d._children ? -22 : 22; })
 	  .attr("dy", ".35em")
 	  .attr("text-anchor", "middle")
-	  .text(function(d) { return d.name; })
+	  .text(nodeText)
 	  .style("fill-opacity", 1)
 
   // Declare the links…
