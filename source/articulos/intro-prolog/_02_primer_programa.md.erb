@@ -22,7 +22,7 @@ Para obtenerlas, se recorren una por una las definiciones que coincidan, o **uni
 
 En un [primer paso](javascript:g2s1()) se inicializa la consulta y el cursor se ubicará en la definición del primer hecho, que, como coincide con `habla(X, ruso)`, se **unifica** `X=juan` obteniendo la primer solución.
 
-Luego el usuario podrá pedir una [segunda solución](javascript:g2s2()). A continuación se buscarán las siguientes definiciones que puedan unicar con `habla(X, ruso)`. Esto se logra recién en la última definición. Dando lugar al [segundo resultado](javascript:g2s3()) unificando ahora `X=pedro`. Notar que cada solución tiene una instanción distinta en las variables.
+Luego el usuario podrá pedir una [segunda solución](javascript:g2s2()). A continuación se buscarán las siguientes definiciones que puedan unicar con `habla(X, ruso)`. Esto se logra recién en la última definición, dando lugar al [segundo resultado](javascript:g2s3()), unificando ahora `X=pedro`. Notar que cada solución tiene una instanciación distinta en las variables.
 
 Al pedir una [tercera solución](javascript:g2s4()) no se encontrarán más definiciones que unifiquen con el objetivo y se informará que no hay más soluciones.
 
