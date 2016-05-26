@@ -22,4 +22,4 @@ title: Información de pagos
 * E-mail: bcardiff@gmail.com
 
 
-Para **Mercado Pago** o **PayPal** pueden ponerse en contacto via <a href="mailto:bcardiff@gmail.com">bcardiff@gmail.com</a> of <a href="https://www.facebook.com/messages/brian.j.cardiff">Facebook</a> para recibir la solicitud de transferencia para facilitarles la tarea.
+Para **Mercado Pago** o **PayPal** pueden ponerse en contacto via <a href="mailto:bcardiff@gmail.com">bcardiff@gmail.com</a> o <a href="https://www.facebook.com/messages/brian.j.cardiff">Facebook</a> para recibir la solicitud de transferencia para facilitarles la tarea.
