@@ -11,3 +11,7 @@ title: Brian J. Cardiff
 ## Artículos
 
 * [introducción a prolog](/articulos/intro-prolog)
+
+## Apps
+
+* [Almandala para dibujar mandalas](https://bcardiff.github.io/mandalapp/)
