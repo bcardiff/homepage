@@ -1,0 +1,383 @@
+# Astro site design
+
+Date: 2026-09-07
+Status: approved
+
+## Goal
+
+Rebuild www.bcardiff.com with Astro, following the "Personal site for
+academic technologist" design handoff. Content lives in a root `content/`
+folder that doubles as an Obsidian vault. The site uses semantic HTML, one
+hand-written stylesheet, no CSS framework, and as little client JavaScript
+as possible.
+
+The existing Middleman site under `source/` is left untouched. Its content
+(escritos, dibujos, artículos, pagos) will be migrated in a later pass and
+its old URLs are not preserved yet.
+
+## Scope of this pass
+
+Pages: home, writing index, writing post, TIL stream, TIL note page, tag
+pages, RSS feed. The CV appears only as the "Briefly" section on the home
+page. Projects and the full CV page are out of scope. Deployment is out of
+scope (build to `dist/` only).
+
+## Design reference
+
+The handoff lives outside the repo (`Personal Site.dc.html` and its
+`README.md`). Approved screens: 2a home desktop, 3a article desktop, 5a
+home mobile, 5b article mobile. Screen 1c (writing index) is used for
+structure only and restyled with the orange accent. All tokens, sizes and
+SVG paths below come from the handoff README.
+
+## Repository layout
+
+```
+content/                 the vault (see Content model)
+docs/superpowers/specs/  this document
+public/CNAME             copied from source/CNAME
+source/                  old Middleman site, untouched
+src/
+  components/            Nav, Link, Highlight, PhotoFrame, PostList, TilList,
+                         CvList, Chevron, ThemeToggle, MenuToggle, icons
+  layouts/Base.astro     head, fonts, theme script, pencil filter defs,
+                         nav, <main>, site footer
+  lib/                   hash.ts, dates.ts, rehype-squiggle.ts,
+                         rehype-code-copy.ts, shiki-flexoki.ts
+  pages/                 index, writing/index, writing/[slug],
+                         til/index, til/[slug], tags/[tag], rss.xml.ts
+  styles/site.css        the stylesheet
+  content.config.ts      collections (glob loaders on ../content)
+astro.config.mjs
+package.json
+tsconfig.json
+```
+
+Removed: `Gemfile`, `Gemfile.lock`, `Rakefile`, `config.rb`,
+`.ruby-version`.
+
+`.gitignore` becomes:
+
+```
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env.local
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+.direnv
+.pre-commit-config.yaml
+```
+
+`package.json` scripts: `dev`, `build`, `preview`, `check` (`astro check`),
+`test` (vitest). Node comes from devenv; `npm install` runs on shell entry.
+
+## Content model
+
+Everything under `content/` is plain markdown with YAML frontmatter and
+standard links, so Obsidian can open the folder as a vault. Images sit
+beside the markdown file that uses them and are referenced with relative
+paths. No wikilink support.
+
+### `content/site.yaml`
+
+```yaml
+name: Brian J. Cardiff
+kicker: Software Engineer · Adjunct Professor of Computer Science
+headline: Working, teaching, and coding in the open
+highlight: coding in the open      # substring of headline to mark
+bio: >-                            # markdown inline
+  I build software at ...
+photo: photo.jpg                   # optional, relative to content/
+presence:
+  - { label: GitHub, href: https://github.com/bcardiff }
+  - { label: Mastodon, href: ... }
+  - { label: LinkedIn, href: ... }
+  - { label: Email, href: mailto:... }
+  - { label: RSS, href: /rss.xml }
+author_line: >-                    # markdown inline, article footer
+  **Brian J. Cardiff** builds software at ... Replies welcome on [Mastodon](...) or by [email](...).
+```
+
+### `content/writing/<slug>.md`
+
+```yaml
+title: Types as a conversation, not a contract
+kind: essay          # essay | blog | talk
+date: 2026-08-14
+tags: [types, teaching, compilers]
+dek: What teaching type systems ... compiler errors.   # optional
+draft: false         # optional, drafts are excluded from the build
+```
+
+Slug is the filename. URL `/writing/<slug>/`. Previous and next are the
+neighbours by date across all kinds.
+
+### `content/til/<slug>.md`
+
+```yaml
+date: 2026-09-02
+tags: [git]          # optional
+```
+
+The body's first paragraph is the one-liner shown in lists (may contain
+inline code and links). Any content after the first paragraph is the
+optional note. A TIL with a note gets its own page at `/til/<slug>/`; the
+date permalink in lists points there. A TIL without a note has no page and
+its permalink points to `/til/#<slug>`.
+
+### `content/cv/<slug>.md`
+
+```yaml
+from: 2023
+to: null             # null or absent renders "2023–"; a year renders "2019–2021"
+```
+
+The body is one line of inline markdown, e.g.
+`Software engineer, [NoRedInk](https://noredink.com)`. Entries are ordered
+by `from` descending. The home page shows the first three.
+
+### Collections
+
+`src/content.config.ts` defines `writing`, `til` and `cv` with the glob
+loader and `base: "./content/<name>"`, plus zod schemas for the fields
+above. `site.yaml` is loaded with the file loader as a single-entry
+collection, or imported directly; whichever keeps the templates simplest.
+
+## Routes
+
+| Route | Content |
+|---|---|
+| `/` | header (kicker, headline with highlight, bio, presence links, optional photo), Writing (latest 3), Today I learned (latest 3), Briefly (top 3 CV) |
+| `/writing/` | all posts grouped by year, newest first; each row: day-month date, title, dek, kind label in mono |
+| `/writing/<slug>/` | article layout |
+| `/til/` | full stream, newest first; each row: chevron, one-liner, date permalink; each row has `id=<slug>` |
+| `/til/<slug>/` | article layout for TILs with a note; title is the one-liner, meta row "TIL · date" |
+| `/tags/<tag>/` | writing rows then TIL rows carrying that tag |
+| `/rss.xml` | writing and TIL entries, newest first, via `@astrojs/rss` |
+
+Nav: site name on the left; Writing, TIL, theme toggle on the right. Current
+section rendered in `--ink`. On mobile the nav shows name, theme toggle and
+a menu button; the menu opens a full-width list under the header.
+
+## Markup
+
+Semantic elements do the structure; classes only where an element cannot
+express the role.
+
+- `Base.astro`: `<header class="site"><nav>…</nav></header>`, `<main>`,
+  `<footer class="site">` (nothing in it for now beyond the pencil filter
+  `<svg>` defs, which can also live at the end of `<body>`).
+- Home: `<header class="intro">` with `<p class="kicker">`, `<h1>`,
+  `<p class="bio">`, `<ul class="presence">`; then three `<section>` each
+  with `<header><h2>…</h2><a>All →</a></header>` and a list.
+- Post lists: `<ol class="posts">` with `<li><time datetime>…</time>
+  <a>title</a><p>dek</p></li>`, laid out as the 110px/1fr grid.
+- TIL lists: `<ol class="tils">` with `<li id><svg chevron/> <p>one-liner
+  <a class="permalink"><time>Sep 2, 2026</time></a></p></li>`.
+- CV: `<dl class="cv">` with `<dt>2023–</dt><dd>…</dd>`.
+- Article page: `<article>` containing `<header>` (meta row with
+  `<p class="meta">KIND · DATE</p>` and `<ul class="tags">`, `<h1>`,
+  `<p class="dek">`), the rendered body, and `<footer>` with the author
+  line and a `<nav class="prev-next">`.
+- Dates use `<time datetime="YYYY-MM-DD">` everywhere. Formats: `Aug 2026`
+  in home lists, `Aug 14` in the year-grouped index, `Sep 2, 2026` in TIL
+  permalinks, `AUGUST 14, 2026` in article meta.
+
+## Styling
+
+`src/styles/site.css`, imported once in `Base.astro`. Fonts from
+`@fontsource/lora` (400, 500, 600, italic 400) and
+`@fontsource/ibm-plex-mono` (400, 500), imported in the same place.
+
+Tokens on `:root` (light): `--paper #FFFCF0`, `--bg2 #F2F0E5`,
+`--line2 #E6E4D9`, `--line #DAD8CE`, `--ui #B7B5AC`, `--muted #6F6E69`,
+`--tx3 #403E3B`, `--tx2 #282726`, `--ink #100F0F`, `--accent #BC5215`,
+`--hl #FED3AF`. Dark on `:root[data-theme="dark"]`: `#100F0F`, `#1C1B1A`,
+`#282726`, `#343331`, `#575653`, `#878580`, `#B7B5AC`, `#CECDC3`,
+`#CECDC3`, `#DA702C`, `#4A2B17`. The same dark block is repeated under
+`@media (prefers-color-scheme: dark)` guarded by
+`:root:not([data-theme="light"])`, so the system preference applies before
+the script runs and when JS is off. `color-scheme` is set to match.
+
+Type and spacing values are those in the handoff README, desktop first with
+one `@media (max-width: 640px)` block for the mobile values. `text-wrap:
+pretty` on headings, deks and bio. Body copy never lighter than `--tx3`.
+
+Expected class list: `.site`, `.intro`, `.kicker`, `.bio`, `.presence`,
+`.posts`, `.tils`, `.cv`, `.meta`, `.tags`, `.dek`, `.prev-next`,
+`.squig`, `.highlight`, `.photo`, `.permalink`, `.menu-open`, plus the
+code-block and math classes described below. Anything beyond that needs a
+reason.
+
+## Hand-drawn elements
+
+All strokes are inline SVG with `filter: url(#pencil)`. The filter is
+defined once per page:
+
+```svg
+<filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="n"/>
+  <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+</filter>
+```
+
+### Variant hashing
+
+`src/lib/hash.ts` exports `variant(text: string, n = 3): 1 | 2 | 3`, a
+`×31` rolling hash over the code points of the trimmed text, mod `n`, plus
+one. It is the single source of variety for underlines, chevrons and
+brackets, so a given text always gets the same stroke.
+
+### Squiggle underlines
+
+Three data-URI SVG paths stored as `--squig1`, `--squig2`, `--squig3` on
+`:root` and re-declared in the dark block with the dark accent. A link with
+`class="squig" data-squig="2"` gets `background-image: var(--squig2)`,
+`background-size: 120px 6px`, `repeat-x`, `position: 0 100%`,
+`padding-bottom: 2px`, `text-decoration: none`.
+
+Where applied: presence links, inline links in bio, body and CV text, TIL
+date permalinks, article footer links. Not applied to nav links, post
+titles, tags, or "All →" links.
+
+`rehype-squiggle` runs on markdown output and adds the class and attribute
+to every `<a>` whose text is not empty, hashing the link's text content.
+The `Link.astro` component does the same for links written in templates.
+Inline `<code>` inside such a link gets `padding: 1px 5px 0;
+border-radius: 3px 3px 0 0; position: relative; top: -1px`.
+
+### Highlight
+
+`Highlight.astro` wraps the `highlight` phrase from `site.yaml` inside the
+`h1`: `position: relative; display: inline-block; white-space: nowrap;
+isolation: isolate`, with the two-stroke SVG (`viewBox 0 0 300 48`, width
+104%, left -2%, top 2px, z-index -1, `preserveAspectRatio: none`, paths
+`M4 30 C 70 22, 150 34, 296 26` width 22 and `M8 20 C 90 26, 200 14, 292
+22` width 16, stroke `--hl`, round caps).
+
+### Photo frame
+
+`PhotoFrame.astro`, rendered only when `site.yaml` has `photo`. Image
+clipped with `clip-path: path('M10 8 L 192 7 L 190 233 L 8 231 Z')` in a
+200×240 box, SVG overlay with the same path (stroke 1.4 `--ink`) and
+baseline `M16 237 C 70 240, 140 235, 196 239` (width 1.2). Mobile 160×192
+via `transform: scale` of the same paths (the SVG uses the 200×240
+viewBox; the container and clip path scale with a CSS variable).
+
+### Chevron
+
+`Chevron.astro` takes the TIL text and picks one of three paths in a
+`0 0 20 20` viewBox, stroke `--accent` 1.8, round caps and joins, 14px
+(13px mobile):
+
+1. `M6 3 C 9 6, 12 8, 15 10 C 12 12.5, 9 15, 6 17` (handoff)
+2. `M5.5 3.5 C 9.5 6.5, 12.5 8.5, 14.5 10.2 C 12 12, 9 14.5, 6.5 16.5`
+3. `M6.5 2.8 C 9 5.5, 12.5 7.5, 15.5 9.8 C 12.5 12.5, 9.5 14.8, 5.8 17.2`
+
+### Pull-quote bracket
+
+Rendered by CSS on `blockquote`: a pseudo-element cannot hold an SVG path
+with the pencil filter, so a `rehype-blockquote` step inserts the bracket
+SVG (`0 0 120` viewBox stretched to the quote's height, stroke `--accent`
+2.4) as the first child, choosing among three paths by hashing the quote
+text:
+
+1. `M14 3 C 6 30, 8 60, 12 90 S 8 115, 15 117` (handoff)
+2. `M13 4 C 7 28, 9 58, 11 88 S 9 112, 14 116`
+3. `M15 2.5 C 8 32, 7 62, 13 92 S 7 114, 16 118`
+
+Blockquote styling: `margin 44px 0; padding 6px 0 6px 36px; 24px/1.4
+italic --ink` (21px mobile).
+
+### Figures
+
+A markdown image on its own paragraph becomes `<figure>` with the `<img>`
+and, if the image has alt text, a `<figcaption>` in mono. Figures are
+`margin: 44px 0`; on mobile they bleed to the edges (`margin: 36px -22px`).
+The hatched placeholder and wobbly frame from the mock are not generated
+automatically; a post can opt in by writing a `<figure class="framed">` in
+markdown, which the stylesheet styles with the hatch background and an
+inset SVG frame is added by the same rehype step when it sees that class.
+
+### Theme toggle and menu icons
+
+Inline SVG from the handoff (half-filled wobbly circle, 18px; three wobbly
+lines, 22px), colour `--tx3`, inside `<button type="button">` elements with
+`aria-label`s.
+
+## Code blocks
+
+Astro's built-in Shiki with a custom Flexoki theme pair in
+`src/lib/shiki-flexoki.ts` (light and dark) built from the palette's eight
+hues (red `#AF3029`/`#D14D41`, orange `#BC5215`/`#DA702C`, yellow
+`#AD8301`/`#D0A215`, green `#66800B`/`#879A39`, cyan `#24837B`/`#3AA99F`,
+blue `#205EA6`/`#4385BE`, purple `#5E409D`/`#8B7EC8`, magenta
+`#A02F6F`/`#CE5D97`) with the site's `--bg2` as background. Shiki runs in
+dual-theme mode (`themes: { light, dark }`, `defaultColor: false`), which
+emits `--shiki-light` and `--shiki-dark` variables per token; the
+stylesheet selects one based on `data-theme` / `prefers-color-scheme`.
+Languages of note: crystal, haskell, prolog, shellscript, latex, elm,
+erlang, nix; all are in Shiki's bundle.
+
+`rehype-code-copy` wraps each `<pre>` in `<figure class="code"
+data-lang="…">` and prepends `<button type="button" class="copy">` with a
+hand-drawn clipboard icon and a mono "Copy" label, positioned top-right.
+A small script in `Base.astro` (only included when the page has a
+`figure.code`) copies `pre.textContent` with the Clipboard API and flips
+the label to "Copied" for about a second. Without JS the button is
+harmless.
+
+Block styling: `padding 20px 24px; border-radius 4px; background --bg2;
+15px/1.6 mono` (13.5px mobile, bleeding to the edges). Inline code:
+`15–16px mono; background --bg2; padding 1px 5px; radius 3px`.
+
+## Math
+
+`remark-math` and `rehype-katex` in `astro.config.mjs`. `$…$` and
+`$$…$$` are rendered to HTML at build time. `katex/dist/katex.min.css` is
+imported in `Base.astro`; its fonts are self-hosted from the package and
+only fetched by the browser when a page uses them.
+
+## Client JavaScript
+
+1. Theme: inline script in `<head>`, before the stylesheet, reads
+   `localStorage["bjc-theme"]` and sets `data-theme` on `<html>` when a
+   value is stored. The toggle button flips between light and dark
+   (starting from the effective theme) and stores the choice.
+2. Mobile menu: the menu button toggles `.menu-open` on the `nav`. When
+   the script has not run, the button is hidden by CSS and the list is
+   visible.
+3. Copy button handler, described above.
+
+Nothing else. No framework, no islands.
+
+## Placeholder content
+
+The vault ships with the handoff's placeholder copy so every page renders:
+three writing entries (the essay from screen 3a in full, with its figure,
+pull quote, code block and a short math example added; two blog posts with
+short bodies), five TIL entries (two with notes, one containing math),
+and the three Briefly CV lines. `site.yaml` carries the real name, kicker,
+headline, bio draft, and presence links. The photo is omitted (no `photo`
+key) until a real one is added; layout must look right without it.
+
+## Testing and verification
+
+- `npm run check` (astro check) passes: content schemas validate, no type
+  errors in templates.
+- `npm run test` (vitest) covers `variant()` (stable, spread across three
+  values for sample strings), `rehype-squiggle` (adds class and attribute,
+  skips empty links), `rehype-code-copy` (wraps `<pre>`, carries the
+  language), and the TIL first-paragraph split.
+- `npm run build` succeeds; `dist/` contains `index.html`,
+  `writing/index.html`, one folder per post, `til/index.html`, a folder
+  per TIL with a note, `tags/<tag>/index.html`, `rss.xml`, and `CNAME`.
+- Visual check: dev server screenshots at 1100px and 390px for the home
+  page and the essay, compared against the four handoff screenshots, in
+  both themes.
+- Manual: theme toggle persists across reloads; copy button copies the full
+  block; math renders; each of the three squiggle and chevron variants
+  appears somewhere on the placeholder content.
