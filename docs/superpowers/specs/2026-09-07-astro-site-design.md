@@ -44,8 +44,10 @@ src/
                          CvList, Chevron, ThemeToggle, MenuToggle, icons
   layouts/Base.astro     head, fonts, theme script, pencil filter defs,
                          nav, <main>, site footer
-  lib/                   hash.ts, dates.ts, rehype-squiggle.ts,
-                         rehype-code-copy.ts, shiki-flexoki.ts
+  lib/                   hash.ts, dates.ts, entries.ts, collections.ts,
+                         site.ts, til.ts, shiki-flexoki.ts
+  lib/markdown/          squiggle.ts, code-copy.ts, figures.ts,
+                         blockquote.ts, math.ts, svg.ts, index.ts, inline.ts
   pages/                 index, writing/index, writing/[slug],
                          til/index, til/[slug], tags/[tag], rss.xml.ts
   styles/site.css        the stylesheet
@@ -173,10 +175,13 @@ by `from` descending. The home page shows the first three.
 
 `src/content.config.ts` defines `writing`, `til` and `cv` with the glob
 loader and `base: "./content/<name>"`, plus zod schemas for the fields
-above. The writing and TIL schemas are built with the schema-context form
-so they can read the entry's filename and fill in `date` from the first
-eight digits of the prefix when the frontmatter omits it; a filename
-without a valid prefix and no `date` is a schema error. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
+above. The loader is given a `generateId` that keeps the filename stem as
+the entry id. Without it Astro uses the `slug` frontmatter as the id and
+silently drops the second of two entries with the same slug, which would
+defeat the uniqueness check. The writing and TIL schemas are built with the schema-context form
+so the collection helpers can fill in `date` from the first eight digits
+of the entry id when the frontmatter omits it; an entry without a valid
+prefix and no `date` makes the helpers throw, failing the build. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
 `js-yaml`, validates it with a zod schema, and exports the typed object.
 
 ## Routes
@@ -218,6 +223,37 @@ express the role.
 - Dates use `<time datetime="YYYY-MM-DD">` everywhere. Formats: `Aug 2026`
   in home lists, `Aug 14` in the year-grouped index, `Sep 2, 2026` in TIL
   permalinks, `AUGUST 14, 2026` in article meta.
+
+## Markdown pipeline
+
+Astro 7's default markdown processor is Sätteri, a Rust-backed parser with
+its own plugin model (`mdastPlugins` visit the markdown AST, `hastPlugins`
+the HTML AST). The site uses it directly via `@astrojs/markdown-satteri`
+rather than the legacy unified/remark/rehype path, so every plugin named
+below is a Sätteri plugin in `src/lib/markdown/`. The same plugin list is
+reused by `renderInline()` (see Inline markdown) so lists, bio and CV lines
+render exactly like article bodies.
+
+Order inside Sätteri: Astro's syntax highlighter runs first among hast
+plugins, then the site's plugins, then Astro's image and heading-id
+plugins. Two consequences shaped the design:
+
+- Math is rendered by an **mdast** plugin (`math.ts`) that replaces `math`
+  and `inlineMath` nodes with KaTeX HTML, because by the time hast plugins
+  run the highlighter has already turned `$$` blocks into plaintext code.
+  Sätteri's `math` feature is enabled; `remark-math`/`rehype-katex` are not
+  used.
+- The `rawHtml` feature stays **off**: turning it on makes Sätteri lose the
+  code language on fenced blocks. Raw HTML in markdown still passes through
+  untouched, but plugins cannot see inside it, which is why framed figures
+  are triggered by an image title rather than a hand-written `<figure>`.
+
+### Inline markdown
+
+`src/lib/markdown/inline.ts` exports `renderInline(md: string): string`,
+which runs Sätteri with the site's plugins on a one-paragraph string and
+strips the outer `<p>`. It renders the bio, the author line, CV lines and
+TIL one-liners.
 
 ## Styling
 
@@ -276,8 +312,8 @@ Where applied: presence links, inline links in bio, body and CV text, TIL
 date permalinks, article footer links. Not applied to nav links, post
 titles, tags, or "All →" links.
 
-`rehype-squiggle` runs on markdown output and adds the class and attribute
-to every `<a>` whose text is not empty, hashing the link's text content.
+The `squiggle` hast plugin adds the class and attribute to every `<a>`
+whose text is not empty, hashing the link's text content.
 The `Link.astro` component does the same for links written in templates.
 Inline `<code>` inside such a link gets `padding: 1px 5px 0;
 border-radius: 3px 3px 0 0; position: relative; top: -1px`.
@@ -312,8 +348,8 @@ viewBox; the container and clip path scale with a CSS variable).
 
 ### Pull-quote bracket
 
-A CSS pseudo-element cannot carry an SVG path with the pencil filter, so a
-`rehype-blockquote` step inserts the bracket SVG (`0 0 120` viewBox stretched to the quote's height, stroke `--accent`
+A CSS pseudo-element cannot carry an SVG path with the pencil filter, so
+the `blockquote` hast plugin inserts the bracket SVG (`0 0 120` viewBox stretched to the quote's height, stroke `--accent`
 2.4) as the first child, choosing among three paths by hashing the quote
 text:
 
@@ -326,13 +362,14 @@ italic --ink` (21px mobile).
 
 ### Figures
 
-A markdown image on its own paragraph becomes `<figure>` with the `<img>`
-and, if the image has alt text, a `<figcaption>` in mono. Figures are
-`margin: 44px 0`; on mobile they bleed to the edges (`margin: 36px -22px`).
-The hatched placeholder and wobbly frame from the mock are opt-in: a post
-writes `<figure class="framed">` in markdown. The stylesheet gives it the
-hatch background, and the rehype step inserts the wobbly-rectangle SVG
-frame when it sees that class.
+The `figures` hast plugin turns a paragraph that contains only an image
+into `<figure>` with the `<img>` and, if the image has alt text, a
+`<figcaption>` in mono. Figures are `margin: 44px 0`; on mobile they bleed
+to the edges (`margin: 36px -22px`). The hatched background and wobbly
+frame from the mock are opt-in through the image title:
+`![Caption](drawing.png "framed")` becomes `<figure class="framed">` with
+the wobbly-rectangle SVG inserted before the image and the title dropped.
+Obsidian renders the same line as a plain image.
 
 ### Theme toggle and menu icons
 
@@ -354,8 +391,8 @@ stylesheet selects one based on `data-theme` / `prefers-color-scheme`.
 Languages of note: crystal, haskell, prolog, shellscript, latex, elm,
 erlang, nix; all are in Shiki's bundle.
 
-`rehype-code-copy` wraps each `<pre>` in `<figure class="code"
-data-lang="…">` and prepends `<button type="button" class="copy">` with a
+The `code-copy` hast plugin wraps each highlighted `<pre>` in
+`<figure class="code" data-lang="…">` and prepends `<button type="button" class="copy">` with a
 hand-drawn clipboard icon and a mono "Copy" label, positioned top-right.
 A small script in `Base.astro` (only included when the page has a
 `figure.code`) copies `pre.textContent` with the Clipboard API and flips
@@ -368,8 +405,8 @@ Block styling: `padding 20px 24px; border-radius 4px; background --bg2;
 
 ## Math
 
-`remark-math` and `rehype-katex` in `astro.config.mjs`. `$…$` and
-`$$…$$` are rendered to HTML at build time. `katex/dist/katex.min.css` is
+Sätteri's `math` feature plus the `math` mdast plugin (KaTeX's
+`renderToString`). `$…$` and `$$…$$` are rendered to HTML at build time. `katex/dist/katex.min.css` is
 imported in `Base.astro`; its fonts are self-hosted from the package and
 only fetched by the browser when a page uses them.
 
@@ -411,9 +448,10 @@ key) until a real one is added; layout must look right without it.
 - `npm run check` (astro check) passes: content schemas validate, no type
   errors in templates.
 - `npm run test` (vitest) covers `variant()` (stable, spread across three
-  values for sample strings), `rehype-squiggle` (adds class and attribute,
-  skips empty links), `rehype-code-copy` (wraps `<pre>`, carries the
-  language), the TIL first-paragraph split, the filename date prefix
+  values for sample strings), the markdown plugins (squiggle adds class and
+  attribute and skips empty links; code-copy wraps `<pre>` and carries the
+  language; figures and framed figures; blockquote bracket; math),
+  `renderInline`, the TIL first-paragraph split, the filename date prefix
   parser (8-digit and 15-digit prefixes, invalid prefix), and the duplicate-slug check (two entries with one slug throw,
   the message names both files).
 - A production build with a draft entry present does not emit it, and a
