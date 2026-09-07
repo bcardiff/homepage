@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 /** Keep the filename stem as the id, so two files with the same `slug` are both loaded and can be reported. */
 const stem = ({ entry }: { entry: string }) => entry.replace(/\.md$/, "");
