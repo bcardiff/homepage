@@ -85,7 +85,7 @@ paths. No wikilink support.
 
 ```yaml
 name: Brian J. Cardiff
-kicker: Software Engineer · Adjunct Professor of Computer Science
+kicker: Software Engineer · Lecturer Professor of Computer Science
 headline: Working, teaching, and coding in the open
 highlight: coding in the open      # substring of headline to mark
 bio: >-                            # markdown inline
@@ -101,24 +101,46 @@ author_line: >-                    # markdown inline, article footer
   **Brian J. Cardiff** builds software at ... Replies welcome on [Mastodon](...) or by [email](...).
 ```
 
-### `content/writing/<slug>.md`
+### File naming, slugs and status (writing and TIL)
+
+Files are named `YYYYMMDD-<anything>.md`, e.g.
+`20260814-types-conversation.md`. The prefix is the entry's date and
+keeps the vault sorted; the rest of the name is free. The URL slug is
+**not** derived from the filename: it comes from a required `slug`
+frontmatter property (`^[a-z0-9]+(-[a-z0-9]+)*$`).
+
+Every writing and TIL entry has `status: draft | published`. Published
+entries are always built. Drafts are included only in development
+(`astro dev`, where `import.meta.env.DEV` is true) and are dropped from
+production builds, lists, tag pages, prev/next and the RSS feed.
+
+Slugs must be unique within a collection. `src/lib/collections.ts`
+exposes `getWriting()` and `getTils()`, which apply the status filter,
+sort by date, and throw an error naming both files when two entries share
+a slug. Because every page goes through these helpers, a duplicate fails
+`astro build` and `astro check`.
+
+### `content/writing/YYYYMMDD-<name>.md`
 
 ```yaml
+slug: types-as-a-conversation
 title: Types as a conversation, not a contract
 kind: essay          # essay | blog | talk
-date: 2026-08-14
+status: published    # draft | published
+date: 2026-08-14     # optional; defaults to the filename prefix
 tags: [types, teaching, compilers]
 dek: What teaching type systems ... compiler errors.   # optional
-draft: false         # optional, drafts are excluded from the build
 ```
 
-Slug is the filename. URL `/writing/<slug>/`. Previous and next are the
-neighbours by date across all kinds.
+URL `/writing/<slug>/`. Previous and next are the neighbours by date
+across all kinds.
 
-### `content/til/<slug>.md`
+### `content/til/YYYYMMDD-<name>.md`
 
 ```yaml
-date: 2026-09-02
+slug: git-range-diff
+status: published    # draft | published
+date: 2026-09-02     # optional; defaults to the filename prefix
 tags: [git]          # optional
 ```
 
@@ -128,7 +150,10 @@ optional note. A TIL with a note gets its own page at `/til/<slug>/`; the
 date permalink in lists points there. A TIL without a note has no page and
 its permalink points to `/til/#<slug>`.
 
-### `content/cv/<slug>.md`
+### `content/cv/<name>.md`
+
+CV entries have no URL, so no slug, status or date prefix. The filename is
+free.
 
 ```yaml
 from: 2023
@@ -143,7 +168,10 @@ by `from` descending. The home page shows the first three.
 
 `src/content.config.ts` defines `writing`, `til` and `cv` with the glob
 loader and `base: "./content/<name>"`, plus zod schemas for the fields
-above. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
+above. The writing and TIL schemas are built with the schema-context form
+so they can read the entry's filename and fill in `date` from the
+`YYYYMMDD` prefix when the frontmatter omits it; a filename without a
+valid prefix and no `date` is a schema error. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
 `js-yaml`, validates it with a zod schema, and exports the typed object.
 
 ## Routes
@@ -356,10 +384,11 @@ Nothing else. No framework, no islands.
 ## Placeholder content
 
 The vault ships with the handoff's placeholder copy so every page renders:
-three writing entries (the essay from screen 3a in full, with its figure,
-pull quote, code block and a short math example added; two blog posts with
-short bodies), five TIL entries (two with notes, one containing math),
-and the three Briefly CV lines. `site.yaml` carries the real name, kicker,
+three published writing entries (the essay from screen 3a in full, with
+its figure, pull quote, code block and a short math example added; two
+blog posts with short bodies), one draft post, five published TIL entries
+(two with notes, one containing math), one draft TIL, and the three
+Briefly CV lines. `site.yaml` carries the real name, kicker,
 headline, bio draft, and presence links. The photo is omitted (no `photo`
 key) until a real one is added; layout must look right without it.
 
@@ -370,7 +399,11 @@ key) until a real one is added; layout must look right without it.
 - `npm run test` (vitest) covers `variant()` (stable, spread across three
   values for sample strings), `rehype-squiggle` (adds class and attribute,
   skips empty links), `rehype-code-copy` (wraps `<pre>`, carries the
-  language), and the TIL first-paragraph split.
+  language), the TIL first-paragraph split, the filename date prefix
+  parser, and the duplicate-slug check (two entries with one slug throw,
+  the message names both files).
+- A production build with a draft entry present does not emit it, and a
+  dev server does; both checked once by hand.
 - `npm run build` succeeds; `dist/` contains `index.html`,
   `writing/index.html`, one folder per post, `til/index.html`, a folder
   per TIL with a note, `tags/<tag>/index.html`, `rss.xml`, and `CNAME`.
