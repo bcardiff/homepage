@@ -103,9 +103,12 @@ author_line: >-                    # markdown inline, article footer
 
 ### File naming, slugs and status (writing and TIL)
 
-Files are named `YYYYMMDD-<anything>.md`, e.g.
-`20260814-types-conversation.md`. The prefix is the entry's date and
-keeps the vault sorted; the rest of the name is free. The URL slug is
+Files are named `<digits>-<anything>.md`, where the digit run starts
+with `YYYYMMDD` and may continue with more digits, so both
+`20260814-types-conversation.md` and `202608141132001-types.md`
+(`YYYYMMDDHHMMNNN`, as Obsidian's unique-note prefix produces) are valid.
+Only the first eight digits are read as the date; anything after them is
+ignored. The prefix keeps the vault sorted; the rest of the name is free. The URL slug is
 **not** derived from the filename: it comes from a required `slug`
 frontmatter property (`^[a-z0-9]+(-[a-z0-9]+)*$`).
 
@@ -120,14 +123,14 @@ sort by date, and throw an error naming both files when two entries share
 a slug. Because every page goes through these helpers, a duplicate fails
 `astro build` and `astro check`.
 
-### `content/writing/YYYYMMDD-<name>.md`
+### `content/writing/<digits>-<name>.md`
 
 ```yaml
 slug: types-as-a-conversation
 title: Types as a conversation, not a contract
 kind: essay          # essay | blog | talk
 status: published    # draft | published
-date: 2026-08-14     # optional; defaults to the filename prefix
+date: 2026-08-14     # optional; defaults to the filename's YYYYMMDD prefix
 tags: [types, teaching, compilers]
 dek: What teaching type systems ... compiler errors.   # optional
 ```
@@ -135,12 +138,12 @@ dek: What teaching type systems ... compiler errors.   # optional
 URL `/writing/<slug>/`. Previous and next are the neighbours by date
 across all kinds.
 
-### `content/til/YYYYMMDD-<name>.md`
+### `content/til/<digits>-<name>.md`
 
 ```yaml
 slug: git-range-diff
 status: published    # draft | published
-date: 2026-09-02     # optional; defaults to the filename prefix
+date: 2026-09-02     # optional; defaults to the filename's YYYYMMDD prefix
 tags: [git]          # optional
 ```
 
@@ -169,9 +172,9 @@ by `from` descending. The home page shows the first three.
 `src/content.config.ts` defines `writing`, `til` and `cv` with the glob
 loader and `base: "./content/<name>"`, plus zod schemas for the fields
 above. The writing and TIL schemas are built with the schema-context form
-so they can read the entry's filename and fill in `date` from the
-`YYYYMMDD` prefix when the frontmatter omits it; a filename without a
-valid prefix and no `date` is a schema error. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
+so they can read the entry's filename and fill in `date` from the first
+eight digits of the prefix when the frontmatter omits it; a filename
+without a valid prefix and no `date` is a schema error. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
 `js-yaml`, validates it with a zod schema, and exports the typed object.
 
 ## Routes
@@ -400,7 +403,7 @@ key) until a real one is added; layout must look right without it.
   values for sample strings), `rehype-squiggle` (adds class and attribute,
   skips empty links), `rehype-code-copy` (wraps `<pre>`, carries the
   language), the TIL first-paragraph split, the filename date prefix
-  parser, and the duplicate-slug check (two entries with one slug throw,
+  parser (8-digit and 15-digit prefixes, invalid prefix), and the duplicate-slug check (two entries with one slug throw,
   the message names both files).
 - A production build with a draft entry present does not emit it, and a
   dev server does; both checked once by hand.
