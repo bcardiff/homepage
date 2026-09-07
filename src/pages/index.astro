@@ -1,4 +1,11 @@
 ---
+import { getWriting, getTils, getCv } from "../lib/collections";
+const posts = await getWriting();
+const tils = await getTils();
+const cv = await getCv();
 ---
-<html lang="en"><head><meta charset="utf-8" /><title>Brian J. Cardiff</title></head>
-<body><h1>Brian J. Cardiff</h1></body></html>
+<html lang="en"><head><meta charset="utf-8" /><title>smoke</title></head><body>
+<ul id="posts">{posts.map((p) => <li>{p.url} {p.data.title} {p.date.toISOString()}</li>)}</ul>
+<ul id="tils">{tils.map((t) => <li>{t.url} | {t.line} | {t.note ? "note" : "no note"}</li>)}</ul>
+<ul id="cv">{cv.map((c) => <li>{c.data.from} {c.body}</li>)}</ul>
+</body></html>

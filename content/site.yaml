@@ -1,0 +1,23 @@
+name: Brian J. Cardiff
+kicker: Software Engineer · Adjunct Professor of Computer Science
+headline: Working, teaching, and coding in the open
+highlight: coding in the open
+bio: >-
+  I build software at NoRedInk and teach programming paradigms at
+  Universidad de Buenos Aires, where I also do research on how people learn
+  to think in different languages. Since 2013 I have been part of the core
+  team of an open source compiler. I write essays about languages, teaching
+  and maintaining software, and keep a stream of short notes on what I learn
+  along the way.
+# photo: photo.jpg   # uncomment and drop the file in content/ to show the framed photo
+presence:
+  - { label: GitHub, href: https://github.com/bcardiff }
+  - { label: Mastodon, href: https://mastodon.social/@bcardiff }   # placeholder handle, author to confirm
+  - { label: LinkedIn, href: https://www.linkedin.com/in/bcardiff }   # placeholder, author to confirm
+  - { label: Email, href: mailto:bcardiff@gmail.com }
+  - { label: RSS, href: /rss.xml }
+author_line: >-
+  **Brian J. Cardiff** builds software at NoRedInk and teaches programming
+  paradigms at Universidad de Buenos Aires. Replies welcome on
+  [Mastodon](https://mastodon.social/@bcardiff) or by
+  [email](mailto:bcardiff@gmail.com).
