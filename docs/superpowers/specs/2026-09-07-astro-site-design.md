@@ -143,8 +143,8 @@ by `from` descending. The home page shows the first three.
 
 `src/content.config.ts` defines `writing`, `til` and `cv` with the glob
 loader and `base: "./content/<name>"`, plus zod schemas for the fields
-above. `site.yaml` is loaded with the file loader as a single-entry
-collection, or imported directly; whichever keeps the templates simplest.
+above. `site.yaml` is not a collection: `src/lib/site.ts` reads it with
+`js-yaml`, validates it with a zod schema, and exports the typed object.
 
 ## Routes
 
@@ -279,9 +279,8 @@ viewBox; the container and clip path scale with a CSS variable).
 
 ### Pull-quote bracket
 
-Rendered by CSS on `blockquote`: a pseudo-element cannot hold an SVG path
-with the pencil filter, so a `rehype-blockquote` step inserts the bracket
-SVG (`0 0 120` viewBox stretched to the quote's height, stroke `--accent`
+A CSS pseudo-element cannot carry an SVG path with the pencil filter, so a
+`rehype-blockquote` step inserts the bracket SVG (`0 0 120` viewBox stretched to the quote's height, stroke `--accent`
 2.4) as the first child, choosing among three paths by hashing the quote
 text:
 
@@ -297,10 +296,10 @@ italic --ink` (21px mobile).
 A markdown image on its own paragraph becomes `<figure>` with the `<img>`
 and, if the image has alt text, a `<figcaption>` in mono. Figures are
 `margin: 44px 0`; on mobile they bleed to the edges (`margin: 36px -22px`).
-The hatched placeholder and wobbly frame from the mock are not generated
-automatically; a post can opt in by writing a `<figure class="framed">` in
-markdown, which the stylesheet styles with the hatch background and an
-inset SVG frame is added by the same rehype step when it sees that class.
+The hatched placeholder and wobbly frame from the mock are opt-in: a post
+writes `<figure class="framed">` in markdown. The stylesheet gives it the
+hatch background, and the rehype step inserts the wobbly-rectangle SVG
+frame when it sees that class.
 
 ### Theme toggle and menu icons
 
