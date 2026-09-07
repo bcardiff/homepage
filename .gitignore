@@ -16,3 +16,16 @@
 
 # Ignore .DS_store file
 .DS_Store
+
+.env.local
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
