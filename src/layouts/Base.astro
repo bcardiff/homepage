@@ -1,0 +1,50 @@
+---
+import "@fontsource/lora/400.css";
+import "@fontsource/lora/400-italic.css";
+import "@fontsource/lora/500.css";
+import "@fontsource/lora/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "katex/dist/katex.min.css";
+import "../styles/site.css";
+import Nav from "../components/Nav.astro";
+import { site } from "../lib/site";
+
+interface Props {
+  page: "home" | "article" | "index";
+  title?: string;
+  description?: string;
+  section?: "writing" | "til";
+}
+const { page, title, description, section } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("bjc-theme");
+          if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class={page}>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" />
+        </filter>
+      </defs>
+    </svg>
+    <header class="site"><Nav section={section} /></header>
+    <main><slot /></main>
+  </body>
+</html>

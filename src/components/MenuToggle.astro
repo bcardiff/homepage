@@ -1,0 +1,20 @@
+---
+---
+<button type="button" class="menu" aria-label="Menu" aria-expanded="false" aria-controls="site-menu" hidden>
+  <svg viewBox="0 0 24 24" width="22" height="22" style="filter:url(#pencil)" aria-hidden="true">
+    <path d="M3 6.5 C 9 6, 15 6.8, 21 6.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M3.5 12.2 C 9 11.6, 15 12.4, 20.5 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M3 17.8 C 9 17.3, 15 18.1, 21 17.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+</button>
+<script>
+  const btn = document.querySelector<HTMLButtonElement>("button.menu");
+  const nav = btn?.closest("nav");
+  if (btn && nav) {
+    btn.hidden = false;
+    btn.addEventListener("click", () => {
+      const open = nav.classList.toggle("menu-open");
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  }
+</script>

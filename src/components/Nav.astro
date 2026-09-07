@@ -1,0 +1,21 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import MenuToggle from "./MenuToggle.astro";
+import { site } from "../lib/site";
+
+interface Props { section?: "writing" | "til" }
+const { section } = Astro.props;
+const links = [
+  { href: "/writing/", label: "Writing", key: "writing" },
+  { href: "/til/", label: "TIL", key: "til" },
+] as const;
+---
+<nav aria-label="Site">
+  <a class="name" href="/">{site.name}</a>
+  <div class="controls"><ThemeToggle /><MenuToggle /></div>
+  <ul id="site-menu">
+    {links.map((l) => (
+      <li><a href={l.href} aria-current={section === l.key ? "page" : undefined}>{l.label}</a></li>
+    ))}
+  </ul>
+</nav>
