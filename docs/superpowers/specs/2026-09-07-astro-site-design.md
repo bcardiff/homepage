@@ -20,7 +20,9 @@ its old URLs are not preserved yet.
 Pages: home, writing index, writing post, TIL stream, TIL note page, tag
 pages, RSS feed. The CV appears only as the "Briefly" section on the home
 page. Projects and the full CV page are out of scope. Deployment is out of
-scope (build to `dist/` only).
+scope (build to `dist/` only): the site will move from GitHub Pages to
+Cloudflare once it works locally, so nothing here depends on either host.
+`public/CNAME` is kept only until that move.
 
 ## Design reference
 
@@ -388,10 +390,19 @@ Nothing else. No framework, no islands.
 
 The vault ships with the handoff's placeholder copy so every page renders:
 three published writing entries (the essay from screen 3a in full, with
-its figure, pull quote, code block and a short math example added; two
-blog posts with short bodies), one draft post, five published TIL entries
-(two with notes, one containing math), one draft TIL, and the three
-Briefly CV lines. `site.yaml` carries the real name, kicker,
+its figure, pull quote and code block; two blog posts with short bodies),
+five published TIL entries (two with notes, one containing math), one
+draft TIL, and the three Briefly CV lines.
+
+One draft writing entry, `content/writing/<digits>-gallery.md` with slug
+`gallery`, is a permanent playground rather than placeholder copy. It
+exercises every widget the markdown pipeline supports, one section per
+widget with a short note on the syntax used: headings, paragraphs with
+inline links (all three squiggle variants), inline code inside a link,
+lists, a plain image figure and a framed figure, pull quotes (all three
+bracket variants), code blocks in crystal, haskell, prolog and shell with
+the copy button, inline and display math, and a table. Because it is a
+draft it is visible only in development and is never deployed. `site.yaml` carries the real name, kicker,
 headline, bio draft, and presence links. The photo is omitted (no `photo`
 key) until a real one is added; layout must look right without it.
 
