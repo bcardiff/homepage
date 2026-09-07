@@ -1,0 +1,36 @@
+{
+  "name": "bcardiff-homepage",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-satteri": "^0.4.0",
+    "@astrojs/rss": "^4.0.19",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/lora": "^5.3.0",
+    "astro": "^7.3.1",
+    "js-yaml": "^5.4.1",
+    "katex": "^0.18.7",
+    "satteri": "^0.10.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/hast": "^3.0.5",
+    "@types/js-yaml": "^4.0.9",
+    "@types/katex": "^0.16.8",
+    "@types/mdast": "^4.0.4",
+    "shiki": "^4.4.3",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
+  }
+}
