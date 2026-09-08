@@ -1,6 +1,42 @@
 ---
 import Base from "../layouts/Base.astro";
+import Highlight from "../components/Highlight.astro";
+import PhotoFrame from "../components/PhotoFrame.astro";
+import Link from "../components/Link.astro";
+import PostList from "../components/PostList.astro";
+import TilList from "../components/TilList.astro";
+import CvList from "../components/CvList.astro";
+import { site } from "../lib/site";
+import { getWriting, getTils, getCv } from "../lib/collections";
+import { renderInline } from "../lib/markdown/inline";
+
+const posts = (await getWriting()).slice(0, 3);
+const tils = (await getTils()).slice(0, 3);
+const cv = (await getCv()).slice(0, 3);
 ---
-<Base page="home">
-  <p>Layout smoke test. <a class="squig" data-squig="2" href="/writing/">A squiggle link</a>.</p>
+<Base page="home" description={site.kicker}>
+  <header class="intro">
+    <p class="kicker">{site.kicker}</p>
+    <h1><Highlight text={site.headline} highlight={site.highlight} /></h1>
+    {site.photo && <PhotoFrame file={site.photo} alt={site.name} />}
+    <p class="bio" set:html={renderInline(site.bio)} />
+    <ul class="presence">
+      {site.presence.map((l) => <li><Link href={l.href}>{l.label}</Link></li>)}
+    </ul>
+  </header>
+
+  <section>
+    <header><h2>Writing</h2><a href="/writing/">All →</a></header>
+    <PostList posts={posts} />
+  </section>
+
+  <section>
+    <header><h2>Today I learned</h2><a href="/til/">All →</a></header>
+    <TilList tils={tils} />
+  </section>
+
+  <section>
+    <header><h2>Briefly</h2></header>
+    <CvList entries={cv} />
+  </section>
 </Base>

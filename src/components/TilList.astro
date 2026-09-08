@@ -1,0 +1,25 @@
+---
+import type { Til } from "../lib/collections";
+import { renderInline } from "../lib/markdown/inline";
+import { chevronSvg } from "../lib/markdown/svg";
+import { variant } from "../lib/hash";
+import { isoDate, fmtFull } from "../lib/dates";
+
+interface Props { tils: Til[] }
+const { tils } = Astro.props;
+---
+<ol class="tils">
+  {tils.map((t) => {
+    const date = fmtFull(t.date);
+    return (
+      <li id={t.data.slug}>
+        <Fragment set:html={chevronSvg(variant(t.line))} />
+        <p>
+          <Fragment set:html={renderInline(t.line)} />
+          {" "}
+          <a class="permalink squig" data-squig={variant(date)} href={t.url}><time datetime={isoDate(t.date)}>{date}</time></a>
+        </p>
+      </li>
+    );
+  })}
+</ol>

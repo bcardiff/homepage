@@ -1,0 +1,20 @@
+---
+import type { Post } from "../lib/collections";
+import { isoDate, fmtMonthYear, fmtDayMonth } from "../lib/dates";
+
+interface Props { posts: Post[]; dateStyle?: "month-year" | "day-month"; showKind?: boolean }
+const { posts, dateStyle = "month-year", showKind = false } = Astro.props;
+const fmt = dateStyle === "day-month" ? fmtDayMonth : fmtMonthYear;
+---
+<ol class="posts">
+  {posts.map((p) => (
+    <li>
+      <time datetime={isoDate(p.date)}>{fmt(p.date)}</time>
+      <div>
+        <a href={p.url}>{p.data.title}</a>
+        {p.data.dek && <p>{p.data.dek}</p>}
+        {showKind && <span class="kind">{p.data.kind}</span>}
+      </div>
+    </li>
+  ))}
+</ol>

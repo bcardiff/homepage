@@ -1,0 +1,16 @@
+---
+import type { CvEntry } from "../lib/collections";
+import { renderInline } from "../lib/markdown/inline";
+
+interface Props { entries: CvEntry[] }
+const { entries } = Astro.props;
+const range = (e: CvEntry) => (e.data.to ? `${e.data.from}–${e.data.to}` : `${e.data.from}–`);
+---
+<dl class="cv">
+  {entries.map((e) => (
+    <>
+      <dt>{range(e)}</dt>
+      <dd set:html={renderInline(e.body ?? "")} />
+    </>
+  ))}
+</dl>

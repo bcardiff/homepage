@@ -1,0 +1,9 @@
+---
+import { variant } from "../lib/hash";
+
+interface Props { href: string; class?: string }
+const { href, class: cls } = Astro.props;
+const html = await Astro.slots.render("default");
+const v = variant(html.replace(/<[^>]+>/g, ""));
+---
+<a href={href} class:list={["squig", cls]} data-squig={v}><Fragment set:html={html} /></a>

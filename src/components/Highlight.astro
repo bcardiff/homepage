@@ -1,0 +1,16 @@
+---
+interface Props { text: string; highlight?: string }
+const { text, highlight } = Astro.props;
+const i = highlight ? text.indexOf(highlight) : -1;
+const before = i >= 0 ? text.slice(0, i) : text;
+const after = i >= 0 && highlight ? text.slice(i + highlight.length) : "";
+---
+{before}{i >= 0 && (
+  <span class="highlight">
+    <svg viewBox="0 0 300 48" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M4 30 C 70 22, 150 34, 296 26" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/>
+      <path d="M8 20 C 90 26, 200 14, 292 22" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"/>
+    </svg>
+    <span>{highlight}</span>
+  </span>
+)}{after}

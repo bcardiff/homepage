@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props { file: string; alt?: string }
+const { file, alt = "" } = Astro.props;
+const photos = import.meta.glob<ImageMetadata>("/content/*.{jpg,jpeg,png,webp}", { eager: true, import: "default" });
+const src = photos[`/content/${file}`];
+if (!src) throw new Error(`site.yaml photo "${file}" was not found in content/`);
+---
+<div class="photo">
+  <Image src={src} alt={alt} width={400} height={480} />
+  <svg viewBox="0 0 200 240" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <clipPath id="photo-clip" clipPathUnits="objectBoundingBox">
+        <path d="M.05 .0333 L.96 .0292 L.95 .9708 L.04 .9625 Z"/>
+      </clipPath>
+    </defs>
+    <path d="M10 8 L 192 7 L 190 233 L 8 231 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    <path d="M16 237 C 70 240, 140 235, 196 239" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  </svg>
+</div>
