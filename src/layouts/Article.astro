@@ -1,0 +1,63 @@
+---
+import Base from "./Base.astro";
+import { site } from "../lib/site";
+import { renderInline } from "../lib/markdown/inline";
+import { isoDate, fmtLong } from "../lib/dates";
+
+interface Adjacent { url: string; title: string }
+interface Props {
+  title: string;
+  titleHtml?: string;
+  kind: string;
+  date: Date;
+  tags: string[];
+  dek?: string;
+  section: "writing" | "til";
+  prev?: Adjacent;
+  next?: Adjacent;
+  description?: string;
+}
+const { title, titleHtml, kind, date, tags, dek, section, prev, next, description } = Astro.props;
+---
+<Base page="article" section={section} title={title} description={description ?? dek}>
+  <article>
+    <header>
+      <div class="meta">
+        <span>{kind} · <time datetime={isoDate(date)}>{fmtLong(date)}</time></span>
+        {tags.length > 0 && (
+          <ul class="tags">{tags.map((t) => <li><a href={`/tags/${t}/`}>#{t}</a></li>)}</ul>
+        )}
+      </div>
+      <h1>{titleHtml ? <Fragment set:html={titleHtml} /> : title}</h1>
+      {dek && <p class="dek">{dek}</p>}
+    </header>
+    <slot />
+    <footer>
+      <p set:html={renderInline(site.author_line)} />
+      {(prev || next) && (
+        <nav class="prev-next" aria-label="Adjacent posts">
+          {prev && <a class="prev" href={prev.url}><small>← Previous</small><span>{prev.title}</span></a>}
+          {next && <a class="next" href={next.url}><small>Next →</small><span>{next.title}</span></a>}
+        </nav>
+      )}
+    </footer>
+  </article>
+</Base>
+<script>
+  document.querySelectorAll<HTMLButtonElement>("figure.code button.copy").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const pre = btn.closest("figure")?.querySelector("pre");
+      const label = btn.querySelector("span");
+      if (!pre) return;
+      try {
+        await navigator.clipboard.writeText(pre.textContent ?? "");
+        if (label) label.textContent = "Copied";
+        btn.dataset.copied = "";
+        setTimeout(() => {
+          if (label) label.textContent = "Copy";
+          delete btn.dataset.copied;
+        }, 1200);
+      } catch {}
+    });
+  });
+</script>

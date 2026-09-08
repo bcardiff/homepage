@@ -1,0 +1,30 @@
+---
+import { render } from "astro:content";
+import Article from "../../layouts/Article.astro";
+import { getWriting, type Post } from "../../lib/collections";
+
+export async function getStaticPaths() {
+  const posts = await getWriting();
+  return posts.map((post, i) => ({
+    params: { slug: post.data.slug },
+    props: { post, prev: posts[i + 1], next: posts[i - 1] },
+  }));
+}
+
+interface Props { post: Post; prev?: Post; next?: Post }
+const { post, prev, next } = Astro.props;
+const { Content } = await render(post);
+const link = (p?: Post) => (p ? { url: p.url, title: p.data.title } : undefined);
+---
+<Article
+  title={post.data.title}
+  kind={post.data.kind}
+  date={post.date}
+  tags={post.data.tags}
+  dek={post.data.dek}
+  section="writing"
+  prev={link(prev)}
+  next={link(next)}
+>
+  <Content />
+</Article>
