@@ -89,7 +89,7 @@ paths. No wikilink support.
 
 ```yaml
 name: Brian J. Cardiff
-kicker: Software Engineer · Adjunct Professor of Computer Science
+kicker: Software Engineer · Lecturer Professor of Computer Science
 headline: Working, teaching, and coding in the open
 highlight: coding in the open      # substring of headline to mark
 bio: >-                            # markdown inline
