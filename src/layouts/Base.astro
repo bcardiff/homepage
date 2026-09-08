@@ -28,10 +28,10 @@ const fullTitle = title ? `${title} · ${site.name}` : site.name;
     <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
     <script is:inline>
       (function () {
+        document.documentElement.classList.add("js");
         try {
           var t = localStorage.getItem("bjc-theme");
           if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
-          document.documentElement.classList.add("js");
         } catch (e) {}
       })();
     </script>
