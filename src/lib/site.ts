@@ -1,7 +1,9 @@
-import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
 import * as yaml from "js-yaml";
 import { z } from "astro/zod";
+// Imported through Vite (not fs) so content/site.yaml is part of the module
+// graph: the dev server hot-reloads pages when it changes, and the build
+// never depends on the working directory.
+import raw from "../../content/site.yaml?raw";
 
 const Link = z.object({ label: z.string(), href: z.string() });
 
@@ -23,10 +25,8 @@ export const SiteSchema = z
 
 export type Site = z.infer<typeof SiteSchema>;
 
-export function loadSite(
-  url = new URL("content/site.yaml", pathToFileURL(process.cwd() + "/")),
-): Site {
-  return SiteSchema.parse(yaml.load(readFileSync(url, "utf8")));
+export function parseSite(source: string): Site {
+  return SiteSchema.parse(yaml.load(source));
 }
 
-export const site = loadSite();
+export const site = parseSite(raw);
