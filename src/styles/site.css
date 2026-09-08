@@ -15,7 +15,7 @@
   --squig2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M1 3 C 15 5.5, 30 1, 48 3.8 S 80 5.2, 96 2.4 S 112 4.6, 119 3' fill='none' stroke='%23BC5215' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   --squig3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 6' preserveAspectRatio='none'%3E%3Cpath d='M1 4.6 C 25 3.8, 45 1.2, 70 3.4 S 105 4.8, 119 2' fill='none' stroke='%23BC5215' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   --serif: "Lora", Georgia, serif;
-  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   color-scheme: light;
 }
 

@@ -259,7 +259,7 @@ TIL one-liners.
 
 `src/styles/site.css`, imported once in `Base.astro`. Fonts from
 `@fontsource/lora` (400, 500, 600, italic 400) and
-`@fontsource/ibm-plex-mono` (400, 500), imported in the same place.
+`@fontsource/jetbrains-mono` (400, 500), imported in the same place.
 
 Tokens on `:root` (light): `--paper #FFFCF0`, `--bg2 #F2F0E5`,
 `--line2 #E6E4D9`, `--line #DAD8CE`, `--ui #B7B5AC`, `--muted #6F6E69`,
