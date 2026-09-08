@@ -24,6 +24,9 @@ describe("resolveDate", () => {
   it("falls back to the filename prefix", () => {
     expect(resolveDate({ id: "20260814-a", data: {} }).toISOString()).toBe("2026-08-14T00:00:00.000Z");
   });
+  it("falls back to the filename prefix even when the id has a subfolder", () => {
+    expect(resolveDate({ id: "2026/20260814-a", data: {} }).toISOString()).toBe("2026-08-14T00:00:00.000Z");
+  });
   it("throws when neither is available", () => {
     expect(() => resolveDate({ id: "a", filePath: "content/til/a.md", data: {} })).toThrow(/content\/til\/a\.md/);
   });

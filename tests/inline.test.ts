@@ -17,4 +17,12 @@ describe("renderInline", () => {
   it("plainText decodes basic HTML entities left by tag-stripping", () => {
     expect(plainText("`a < b && c` is [x](http://x)")).toBe("a < b && c is x");
   });
+  it("plainText renders math as its TeX source, not the rendered HTML", () => {
+    expect(plainText("The sum of the first $n$ odd numbers is $n^2$.")).toBe(
+      "The sum of the first n odd numbers is n^2.",
+    );
+  });
+  it("renderInline still renders math with KaTeX markup", () => {
+    expect(renderInline("The sum of the first $n$ odd numbers is $n^2$.")).toContain('class="katex"');
+  });
 });

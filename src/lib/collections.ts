@@ -10,16 +10,18 @@ const visible = (e: { data: { status: "draft" | "published" } }) =>
   import.meta.env.DEV || e.data.status === "published";
 
 export async function getWriting(): Promise<Post[]> {
-  const entries = (await getCollection("writing")).filter(visible);
-  assertUniqueSlugs("writing", entries);
+  const all = await getCollection("writing");
+  assertUniqueSlugs("writing", all);
+  const entries = all.filter(visible);
   return entries
     .map((e) => ({ ...e, date: resolveDate(e), url: `/writing/${e.data.slug}/` }))
     .sort(byDateDesc);
 }
 
 export async function getTils(): Promise<Til[]> {
-  const entries = (await getCollection("til")).filter(visible);
-  assertUniqueSlugs("til", entries);
+  const all = await getCollection("til");
+  assertUniqueSlugs("til", all);
+  const entries = all.filter(visible);
   return entries
     .map((e) => {
       const { line, note } = splitTil(e.body ?? "");

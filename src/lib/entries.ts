@@ -17,7 +17,7 @@ export function assertUniqueSlugs(collection: string, entries: Sluggable[]): voi
 }
 
 export function resolveDate(entry: Dated): Date {
-  const d = entry.data.date ?? dateFromId(entry.id);
+  const d = entry.data.date ?? dateFromId(entry.id.split("/").pop() ?? entry.id);
   if (!d) {
     throw new Error(`${where(entry)}: no date in frontmatter and filename does not start with YYYYMMDD`);
   }

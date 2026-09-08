@@ -31,6 +31,7 @@ const fullTitle = title ? `${title} · ${site.name}` : site.name;
         try {
           var t = localStorage.getItem("bjc-theme");
           if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+          document.documentElement.classList.add("js");
         } catch (e) {}
       })();
     </script>

@@ -23,4 +23,4 @@ Node is provided by devenv (`direnv allow`).
 
 Images go next to the markdown file. `![Caption](img.png "framed")` draws the hatched, pencil-framed figure.
 
-The spec is in `docs/superpowers/specs/`. The previous Middleman site is kept in `source/` until its content is migrated.
+The spec is in `docs/superpowers/specs/`. The previous Middleman site is kept in `source/` until its content is migrated. The Middleman toolchain was removed, so the old site can only be built from a pre-migration commit; the old URLs (escritos, articulos, dibujos, pagos) are not redirected yet.

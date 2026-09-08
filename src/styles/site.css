@@ -366,8 +366,8 @@ figure.code .copy:hover, figure.code .copy[data-copied] { color: var(--accent); 
     padding-top: 16px;
     border-top: 1px solid var(--line);
   }
-  nav[aria-label="Site"].menu-open ul,
-  nav[aria-label="Site"]:has(button.menu[hidden]) ul { display: flex; }
+  nav[aria-label="Site"].menu-open ul { display: flex; }
+  html:not(.js) nav[aria-label="Site"] ul { display: flex; }
 
   header.intro { margin-bottom: 56px; }
   header.intro:has(.photo) {
