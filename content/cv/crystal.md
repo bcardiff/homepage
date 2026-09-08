@@ -1,4 +1,4 @@
 ---
-from: 2013
+from: 2012
 ---
-Core team, an open source compiled language
+Core team of the [Crystal Language](https://crystal-lang.org/) project

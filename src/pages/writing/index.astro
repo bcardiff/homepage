@@ -8,7 +8,7 @@ const years = [...new Set(posts.map((p) => p.date.getUTCFullYear()))];
 ---
 <Base page="index" section="writing" title="Writing">
   <h1>Writing</h1>
-  <p>Essays take a month and argue for something. Blog posts take an afternoon and report something. Both live here.</p>
+
   {years.map((y) => (
     <section>
       <h2>{y}</h2>
