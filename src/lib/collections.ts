@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { assertUniqueSlugs, resolveDate, byDateDesc } from "./entries";
-import { splitTil } from "./til";
+import { splitTil, assertOneLiner } from "./til";
 
 export type Post = CollectionEntry<"writing"> & { date: Date; url: string };
 export type Til = CollectionEntry<"til"> & { date: Date; line: string; note: string | null; url: string };
@@ -23,6 +23,7 @@ export async function getTils(): Promise<Til[]> {
   return entries
     .map((e) => {
       const { line, note } = splitTil(e.body ?? "");
+      assertOneLiner(e.filePath ?? e.id, line);
       const url = note ? `/til/${e.data.slug}/` : `/til/#${e.data.slug}`;
       return { ...e, date: resolveDate(e), line, note, url };
     })

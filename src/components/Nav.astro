@@ -12,10 +12,10 @@ const links = [
 ---
 <nav aria-label="Site">
   <a class="name" href="/">{site.name}</a>
-  <div class="controls"><ThemeToggle /><MenuToggle /></div>
   <ul id="site-menu">
     {links.map((l) => (
       <li><a href={l.href} aria-current={section === l.key ? "page" : undefined}>{l.label}</a></li>
     ))}
   </ul>
+  <div class="controls"><ThemeToggle /><MenuToggle /></div>
 </nav>

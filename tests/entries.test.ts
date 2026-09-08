@@ -31,7 +31,17 @@ describe("resolveDate", () => {
 
 describe("byDateDesc", () => {
   it("sorts newest first", () => {
-    const items = [{ date: new Date(2020, 0, 1) }, { date: new Date(2021, 0, 1) }];
+    const items = [
+      { id: "20200101-a", date: new Date(2020, 0, 1) },
+      { id: "20210101-b", date: new Date(2021, 0, 1) },
+    ];
     expect(items.sort(byDateDesc)[0].date.getFullYear()).toBe(2021);
+  });
+  it("breaks ties on equal dates by id descending", () => {
+    const items = [
+      { id: "20260101-a", date: new Date(2026, 0, 1) },
+      { id: "20260101-b", date: new Date(2026, 0, 1) },
+    ];
+    expect(items.sort(byDateDesc).map((i) => i.id)).toEqual(["20260101-b", "20260101-a"]);
   });
 });

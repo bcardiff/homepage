@@ -11,5 +11,11 @@ export function renderInline(md: string): string {
 
 /** Plain text of a one-paragraph markdown string, for <title> and RSS titles. */
 export function plainText(md: string): string {
-  return renderInline(md).replace(/<[^>]+>/g, "");
+  return renderInline(md)
+    .replace(/<[^>]+>/g, "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&#x27;/g, "'")
+    .replace(/&amp;/g, "&");
 }

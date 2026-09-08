@@ -89,7 +89,7 @@ paths. No wikilink support.
 
 ```yaml
 name: Brian J. Cardiff
-kicker: Software Engineer · Lecturer Professor of Computer Science
+kicker: Software Engineer · Adjunct Professor of Computer Science
 headline: Working, teaching, and coding in the open
 highlight: coding in the open      # substring of headline to mark
 bio: >-                            # markdown inline
@@ -394,10 +394,10 @@ erlang, nix; all are in Shiki's bundle.
 The `code-copy` hast plugin wraps each highlighted `<pre>` in
 `<figure class="code" data-lang="…">` and prepends `<button type="button" class="copy">` with a
 hand-drawn clipboard icon and a mono "Copy" label, positioned top-right.
-A small script in `Base.astro` (only included when the page has a
-`figure.code`) copies `pre.textContent` with the Clipboard API and flips
-the label to "Copied" for about a second. Without JS the button is
-harmless.
+A small script in `Article.astro` (emitted on every article page; a no-op
+when the page has no code blocks) copies `pre.textContent` with the
+Clipboard API and flips the label to "Copied" for about a second. Without
+JS the button is harmless.
 
 Block styling: `padding 20px 24px; border-radius 4px; background --bg2;
 15px/1.6 mono` (13.5px mobile, bleeding to the edges). Inline code:

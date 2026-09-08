@@ -14,4 +14,7 @@ describe("renderInline", () => {
   it("plainText strips tags", () => {
     expect(plainText("Elm's `Debug.todo` is [fine](http://x)")).toBe("Elm’s Debug.todo is fine");
   });
+  it("plainText decodes basic HTML entities left by tag-stripping", () => {
+    expect(plainText("`a < b && c` is [x](http://x)")).toBe("a < b && c is x");
+  });
 });

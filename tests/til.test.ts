@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { splitTil } from "../src/lib/til";
+import { splitTil, assertOneLiner } from "../src/lib/til";
 
 describe("splitTil", () => {
   it("returns the whole body as the line when there is one paragraph", () => {
@@ -13,5 +13,17 @@ describe("splitTil", () => {
   });
   it("keeps a wrapped one-liner together", () => {
     expect(splitTil("Line that\nwraps.")).toEqual({ line: "Line that\nwraps.", note: null });
+  });
+});
+
+describe("assertOneLiner", () => {
+  it("throws naming the file when the line is empty", () => {
+    expect(() => assertOneLiner("content/til/20260101-a.md", "")).toThrow(/content\/til\/20260101-a\.md/);
+  });
+  it("throws when the one-liner is more than a single paragraph", () => {
+    expect(() => assertOneLiner("content/til/20260101-a.md", "First.\n\nSecond.")).toThrow(/content\/til\/20260101-a\.md/);
+  });
+  it("passes for a single paragraph with inline markup", () => {
+    expect(() => assertOneLiner("content/til/20260101-a.md", "Just `code` and [a](http://x).")).not.toThrow();
   });
 });

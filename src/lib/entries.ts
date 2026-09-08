@@ -24,4 +24,5 @@ export function resolveDate(entry: Dated): Date {
   return d;
 }
 
-export const byDateDesc = <T extends { date: Date }>(a: T, b: T) => b.date.getTime() - a.date.getTime();
+export const byDateDesc = <T extends { date: Date; id: string }>(a: T, b: T) =>
+  b.date.getTime() - a.date.getTime() || (a.id < b.id ? 1 : a.id > b.id ? -1 : 0);

@@ -108,10 +108,9 @@ nav[aria-label="Site"] ul {
   padding: 0;
   font-size: 16px;
   color: var(--tx3);
-  order: 1;
 }
 nav[aria-label="Site"] a[aria-current] { color: var(--ink); }
-nav[aria-label="Site"] .controls { display: flex; align-items: center; gap: 18px; order: 2; }
+nav[aria-label="Site"] .controls { display: flex; align-items: center; gap: 18px; }
 nav[aria-label="Site"] button {
   all: unset;
   cursor: pointer;
