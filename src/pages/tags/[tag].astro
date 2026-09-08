@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import PostList from "../../components/PostList.astro";
+import TilList from "../../components/TilList.astro";
+import { getWriting, getTils, type Post, type Til } from "../../lib/collections";
+
+export async function getStaticPaths() {
+  const posts = await getWriting();
+  const tils = await getTils();
+  const tags = new Set([...posts.flatMap((p) => p.data.tags), ...tils.flatMap((t) => t.data.tags)]);
+  return [...tags].sort().map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts.filter((p) => p.data.tags.includes(tag)),
+      tils: tils.filter((t) => t.data.tags.includes(tag)),
+    },
+  }));
+}
+
+interface Props { tag: string; posts: Post[]; tils: Til[] }
+const { tag, posts, tils } = Astro.props;
+---
+<Base page="index" title={`#${tag}`}>
+  <h1>#{tag}</h1>
+  <p>Everything tagged <em>{tag}</em>.</p>
+  {posts.length > 0 && (
+    <section>
+      <header><h2>Writing</h2></header>
+      <PostList posts={posts} />
+    </section>
+  )}
+  {tils.length > 0 && (
+    <section>
+      <header><h2>Today I learned</h2></header>
+      <TilList tils={tils} />
+    </section>
+  )}
+</Base>

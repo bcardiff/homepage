@@ -1,0 +1,12 @@
+---
+import Base from "../../layouts/Base.astro";
+import TilList from "../../components/TilList.astro";
+import { getTils } from "../../lib/collections";
+
+const tils = await getTils();
+---
+<Base page="index" section="til" title="Today I learned">
+  <h1>Today I learned</h1>
+  <p>Short notes on what I learn along the way. Some have a longer note behind the date.</p>
+  <TilList tils={tils} />
+</Base>

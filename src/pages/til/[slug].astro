@@ -1,0 +1,25 @@
+---
+import { render } from "astro:content";
+import Article from "../../layouts/Article.astro";
+import { getTils, type Til } from "../../lib/collections";
+import { renderInline, plainText } from "../../lib/markdown/inline";
+
+export async function getStaticPaths() {
+  const tils = (await getTils()).filter((t) => t.note !== null);
+  return tils.map((til) => ({ params: { slug: til.data.slug }, props: { til } }));
+}
+
+interface Props { til: Til }
+const { til } = Astro.props;
+const { Content } = await render(til);
+---
+<Article
+  title={plainText(til.line)}
+  titleHtml={renderInline(til.line)}
+  kind="TIL"
+  date={til.date}
+  tags={til.data.tags}
+  section="til"
+>
+  <Content />
+</Article>
