@@ -1,0 +1,43 @@
+---
+import { resolveScripts, type PostScript } from "../lib/scripts";
+
+interface Props {
+  filePath?: string;
+  scripts?: string[];
+}
+const { filePath, scripts = [] } = Astro.props;
+
+const resolved: PostScript[] = filePath ? resolveScripts(filePath, scripts) : [];
+
+const assets = import.meta.glob<string>(["/content/**/*.js", "/content/**/*.ts", "!/content/**/*.module.*"], {
+  query: "?url",
+  import: "default",
+});
+
+const classic = await Promise.all(
+  resolved
+    .filter((s) => s.kind === "classic")
+    .map(async (s) => {
+      const load = assets[s.path];
+      if (!load) throw new Error(`${filePath}: script "${s.path}" not found`);
+      return await load();
+    }),
+);
+
+const modules = resolved.filter((s) => s.kind === "module").map((s) => s.path);
+---
+{resolved.filter((s) => s.kind === "external").map((s) => <script is:inline src={s.src}></script>)}
+{classic.map((src) => <script is:inline defer src={src}></script>)}
+{modules.length > 0 && <script is:inline type="application/json" data-post-modules set:html={JSON.stringify(modules)} />}
+
+<script>
+  const el = document.querySelector("script[data-post-modules]");
+  if (el) {
+    const loaders = import.meta.glob("/content/**/*.module.{js,ts}");
+    for (const path of JSON.parse(el.textContent ?? "[]") as string[]) {
+      const load = loaders[path];
+      if (load) load();
+      else console.error(`Post module not found: ${path}`);
+    }
+  }
+</script>

@@ -1,3 +1,5 @@
+@import "./writing-intro-prolog.css";
+
 /* ---- Tokens (Flexoki) ---- */
 :root {
   --paper: #FFFCF0;
@@ -66,7 +68,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 18px;
   line-height: 1.6;
 }
 header.site { max-width: 760px; margin: 0 auto; padding: 36px 40px 0; box-sizing: border-box; }
@@ -267,7 +269,7 @@ article > header { margin-bottom: 56px; }
 .tags { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
 .tags a { color: var(--accent); }
 article h1 { font-size: 44px; line-height: 1.15; margin: 0 0 20px; }
-.dek { font-size: 21px; line-height: 1.5; color: var(--tx3); font-style: italic; margin: 0; text-wrap: pretty; }
+.dek { line-height: 1.5; color: var(--tx3); font-style: italic; margin: 0; text-wrap: pretty; }
 article > p, article > ul, article > ol, article > table { color: var(--tx2); margin: 0 0 26px; }
 article > ul, article > ol { padding-left: 28px; }
 article > h2 { font-size: 28px; margin: 56px 0 18px; color: var(--ink); }
@@ -301,7 +303,6 @@ blockquote {
   position: relative;
   margin: 44px 0;
   padding: 6px 0 6px 36px;
-  font-size: 24px;
   line-height: 1.4;
   color: var(--ink);
   font-style: italic;

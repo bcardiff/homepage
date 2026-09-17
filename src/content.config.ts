@@ -8,6 +8,8 @@ const stem = ({ entry }: { entry: string }) => entry.replace(/\.md$/, "");
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "slug must be lowercase kebab-case");
 const status = z.enum(["draft", "published"]);
 const tags = z.array(z.string().regex(/^[a-z0-9-]+$/, "tags must be lowercase kebab-case")).default([]);
+/** Third party URLs, or paths to `.js`/`.ts` files relative to the Markdown file. */
+const scripts = z.array(z.string()).default([]);
 
 const writing = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./content/writing", generateId: stem }),
@@ -19,6 +21,7 @@ const writing = defineCollection({
     date: z.coerce.date().optional(),
     tags,
     dek: z.string().optional(),
+    scripts,
   }),
 });
 
@@ -29,6 +32,7 @@ const til = defineCollection({
     status,
     date: z.coerce.date().optional(),
     tags,
+    scripts,
   }),
 });
 

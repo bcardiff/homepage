@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import Article from "../../layouts/Article.astro";
+import PostScripts from "../../components/PostScripts.astro";
 import { getWriting, type Post } from "../../lib/collections";
 
 export async function getStaticPaths() {
@@ -23,8 +24,10 @@ const link = (p?: Post) => (p ? { url: p.url, title: p.data.title } : undefined)
   tags={post.data.tags}
   dek={post.data.dek}
   section="writing"
+  slug={post.data.slug}
   prev={link(prev)}
   next={link(next)}
 >
+  <PostScripts filePath={post.filePath} scripts={post.data.scripts} />
   <Content />
 </Article>

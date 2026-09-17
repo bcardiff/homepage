@@ -13,14 +13,15 @@ interface Props {
   tags: string[];
   dek?: string;
   section: "writing" | "til";
+  slug: string;
   prev?: Adjacent;
   next?: Adjacent;
   description?: string;
 }
-const { title, titleHtml, kind, date, tags, dek, section, prev, next, description } = Astro.props;
+const { title, titleHtml, kind, date, tags, dek, section, slug, prev, next, description } = Astro.props;
 ---
 <Base page="article" section={section} title={title} description={description ?? dek}>
-  <article>
+  <article id={`${section}-${slug}`}>
     <header>
       <div class="meta">
         <span>{kind} · <time datetime={isoDate(date)}>{fmtLong(date)}</time></span>
