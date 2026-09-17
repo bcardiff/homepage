@@ -37,8 +37,8 @@ frontmatter list. Entries load in the order given, before the post body:
 ```yaml
 scripts:
   - https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js   # third party library
-  - ./20251015-intro-prolog/_scripts.js                # ad-hoc classic script
-  - ./20251015-intro-prolog/sketch.module.js           # bundled module
+  - ./20151015-intro-prolog/_scripts.js                # ad-hoc classic script
+  - ./20151015-intro-prolog/sketch.module.js           # bundled module
 ```
 
 - **`http(s)://…` or `//…`** — rendered as a plain `<script src>` in the body, before the

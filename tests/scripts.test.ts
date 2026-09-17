@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { resolveScripts } from "../src/lib/scripts";
 
-const md = "content/writing/20251015-intro-prolog.md";
+const md = "content/writing/20151015-intro-prolog.md";
 
 describe("resolveScripts", () => {
   it("keeps absolute URLs as external libraries", () => {
@@ -12,8 +12,8 @@ describe("resolveScripts", () => {
   });
 
   it("resolves relative paths against the Markdown file", () => {
-    expect(resolveScripts(md, ["./20251015-intro-prolog/_scripts.js"])).toEqual([
-      { kind: "classic", path: "/content/writing/20251015-intro-prolog/_scripts.js" },
+    expect(resolveScripts(md, ["./20151015-intro-prolog/_scripts.js"])).toEqual([
+      { kind: "classic", path: "/content/writing/20151015-intro-prolog/_scripts.js" },
     ]);
     expect(resolveScripts(md, ["shared/anim.js"])).toEqual([
       { kind: "classic", path: "/content/writing/shared/anim.js" },

@@ -1,0 +1,89 @@
+/* update color E88D3E */
+/* update color 96E830 */
+
+/* try to highlight */
+#writing-intro-prolog a.next {
+  background-color: #E88D3E;
+  color: white;
+  text-decoration: none;
+}
+
+/* try to highlight */
+#writing-intro-prolog .cursor {
+    color: #E88D3E; 
+    font-weight: bold;
+}
+
+#writing-intro-prolog #g3 code::before {
+  content: '\00a0\00a0';
+  font-size: 1.3em;
+  line-height: 0.7em;
+}
+
+#writing-intro-prolog #g3 .c1::before {
+  content: '●\00a0';
+  color: #E88D3E;
+}
+
+#writing-intro-prolog #g3 .c2::before {
+  content: '\00a0●';
+  color: #96E830;
+}
+
+#writing-intro-prolog #g3 .c1.c2::before {
+  content: '●●';
+
+  background: -webkit-linear-gradient(left, #E88D3E 0%, #E88D3E 50%, #96E830 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#writing-intro-prolog .graph {
+    display: flex;
+    flex-direction: row;
+}
+
+#writing-intro-prolog .graph-code, #writing-intro-prolog .graph-code span.n {
+    padding: 0px 5px;
+    line-height: 1em;
+    font-family: var(--mono);
+}
+
+#writing-intro-prolog .graph-code {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background: var(--bg2);
+}
+
+/* tree */
+
+#writing-intro-prolog .node circle, #writing-intro-prolog .res circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+#writing-intro-prolog .node.success circle {
+  stroke: lightgreen;
+}
+
+#writing-intro-prolog .node.fail circle {
+  stroke: red;
+}
+
+#writing-intro-prolog .node text { 
+  font-size: 0.7em;
+}
+#writing-intro-prolog .res text { 
+  font-size: 0.7em;
+}
+
+#writing-intro-prolog .node { cursor: pointer; }
+
+#writing-intro-prolog .link, #writing-intro-prolog .linkBranch, #writing-intro-prolog .linkRes {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
