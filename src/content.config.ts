@@ -16,7 +16,7 @@ const writing = defineCollection({
   schema: z.object({
     slug,
     title: z.string(),
-    kind: z.enum(["essay", "blog", "talk"]),
+    kind: z.enum(["essay", "blog", "talk", "research"]),
     status,
     date: z.coerce.date().optional(),
     tags,
