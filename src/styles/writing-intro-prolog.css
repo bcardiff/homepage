@@ -38,9 +38,17 @@
   -webkit-text-fill-color: transparent;
 }
 
-#writing-intro-prolog .graph {
+#writing-intro-prolog .graph--h {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#writing-intro-prolog .graph--v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #writing-intro-prolog .graph-code, #writing-intro-prolog .graph-code span.n {

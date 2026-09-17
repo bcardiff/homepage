@@ -58,7 +58,7 @@ Luego el usuario podrá pedir una [segunda solución](javascript:g2s2()). A cont
 
 Al pedir una [tercera solución](javascript:g2s4()) no se encontrarán más definiciones que unifiquen con el objetivo y se informará que no hay más soluciones.
 
-<center id="g2" class="graph">
+<center id="g2" class="graph graph--h">
 
 <div class="graph-code">
     <code class="l1">habla(juan, ruso).</code>
@@ -88,7 +88,7 @@ Las consultas pueden estar formadas por más de una cláusula.
 
 Siguiendo con la analogía de las cláusulas como cajas, cada vez que se obtenga un resultado para la primera, se buscarán los resultados de la segunda. Es importante notar que cada clásula se resuelve teniendo en cuenta *todas* las definiciones y el valor de las variables en ese momento.
 
-<center id="g3" class="graph" style="flex-direction: column">
+<center id="g3" class="graph graph--v">
 
 <div style="display: flex; flex-direction: row">
 
@@ -155,7 +155,7 @@ Al principio se intentará resolver usando [la primera](javascript:g4s1()) defin
 
 En la búsqueda de otra solución se pasará, luego de que se propaguen los _fail_, a [la segunda](javascript:g4s2()) definición. Para resolverla se terminará usando la [única regla](javascript:g4s3()) para `hablaCon(maría, A)`.
 
-<center id="g4" class="graph" style="flex-direction: column">
+<center id="g4" class="graph graph--v" style="flex-direction: column">
 
 <div class="graph-code">
   <code class="l1">habla(juan, ruso).</code>
