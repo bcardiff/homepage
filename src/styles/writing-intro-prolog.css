@@ -31,6 +31,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+#g1 svg, #g2 svg, #g3 svg, #g4 svg, #tree {
+  background-color: #FFFCF0; /* light paper always */ 
+}
+
 #writing-intro-prolog .graph--h {
     display: flex;
     flex-direction: row;
