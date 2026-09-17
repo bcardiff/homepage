@@ -17,17 +17,17 @@ $(function(){
   //   eval($(this).attr('href'));
   // });
 
-  var links = $(".content a[href^='javascript']");
-  $(links[0]).addClass("next");
+  var links = $("#writing-intro-prolog a[href^='javascript']");
+  $(links[0]).addClass("next-cta");
 
   $(links).click(function(){
     var _this = $(this);
-    links.removeClass("next")
+    links.removeClass("next-cta")
     for(var i = 0; i < links.length; i++) {
       if (links[i] == this) {
         pause(function(){
           pause(function(){
-            $(links[i+1]).addClass("next");
+            $(links[i+1]).addClass("next-cta");
           });
         });
         return;
