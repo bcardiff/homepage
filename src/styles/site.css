@@ -25,7 +25,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #100F0F;
-    --bg2: #1C1B1A;
+    --bg2: #403E3C;
     --line2: #282726;
     --line: #343331;
     --ui: #575653;
@@ -45,7 +45,7 @@
 
 :root[data-theme="dark"] {
   --paper: #100F0F;
-  --bg2: #1C1B1A;
+  --bg2: #403E3C;
   --line2: #282726;
   --line: #343331;
   --ui: #575653;
