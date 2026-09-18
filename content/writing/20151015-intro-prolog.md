@@ -2,7 +2,7 @@
 slug: intro-prolog
 title: Introducción a Prolog
 kind: blog
-status: draft
+status: published
 tags: [prolog]
 dek: ""
 scripts:
