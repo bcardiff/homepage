@@ -1,6 +1,7 @@
 ---
 import type { Post } from "../lib/collections";
 import { isoDate, fmtMonthYear, fmtDayMonth } from "../lib/dates";
+import StatusBadge from "./StatusBadge.astro";
 
 interface Props { posts: Post[]; dateStyle?: "month-year" | "day-month"; showKind?: boolean }
 const { posts, dateStyle = "month-year", showKind = false } = Astro.props;
@@ -11,7 +12,7 @@ const fmt = dateStyle === "day-month" ? fmtDayMonth : fmtMonthYear;
     <li>
       <time datetime={isoDate(p.date)}>{fmt(p.date)}</time>
       <div>
-        <a href={p.url}>{p.data.title}</a>
+        <a href={p.url}>{p.data.title}</a> <StatusBadge status={p.data.status} />
         {p.data.dek && <p>{p.data.dek}</p>}
         {showKind && <span class="kind">{p.data.kind}</span>}
       </div>

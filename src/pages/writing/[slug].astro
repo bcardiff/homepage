@@ -5,11 +5,15 @@ import PostScripts from "../../components/PostScripts.astro";
 import { getWriting, type Post } from "../../lib/collections";
 
 export async function getStaticPaths() {
-  const posts = await getWriting();
-  return posts.map((post, i) => ({
-    params: { slug: post.data.slug },
-    props: { post, prev: posts[i + 1], next: posts[i - 1] },
-  }));
+  const listed = await getWriting();
+  const posts = await getWriting({ includeUnlisted: true });
+  return posts.map((post) => {
+    const i = listed.findIndex((p) => p.id === post.id);
+    return {
+      params: { slug: post.data.slug },
+      props: { post, prev: i < 0 ? undefined : listed[i + 1], next: i < 0 ? undefined : listed[i - 1] },
+    };
+  });
 }
 
 interface Props { post: Post; prev?: Post; next?: Post }
@@ -25,6 +29,7 @@ const link = (p?: Post) => (p ? { url: p.url, title: p.data.title } : undefined)
   dek={post.data.dek}
   section="writing"
   slug={post.data.slug}
+  status={post.data.status}
   prev={link(prev)}
   next={link(next)}
 >

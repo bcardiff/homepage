@@ -4,8 +4,8 @@ Personal site built with [Astro](https://astro.build). Content lives in `content
 
 ## Commands
 
-    npm run dev       # dev server, includes drafts
-    npm run build     # production build to dist/, drafts excluded
+    npm run dev       # dev server, lists drafts and unlisted entries
+    npm run build     # production build to dist/, drafts excluded; unlisted pages built
     npm run preview   # serve dist/
     npm run check     # type and content schema checks
     npm test          # unit tests
@@ -20,10 +20,10 @@ direnv does not hook the shell (scripts, CI, coding agents), prefix commands wit
 
 - `content/site.yaml`: name, kicker, headline, bio, presence links, author line, optional photo.
 - `content/writing/<YYYYMMDD…>-<name>.md`: essays, blog posts, talks. Frontmatter: `slug`, `title`, `kind`, `status`, `tags`, optional `dek`, `date` and `scripts`.
-- `content/til/<YYYYMMDD…>-<name>.md`: first paragraph is the one-liner; anything after it makes the TIL its own page.
+- `content/til/<YYYYMMDD…>-<name>.md`: first paragraph is the one-liner; anything after it makes the TIL its own page. Frontmatter includes `slug`, `status`, optional `date`, `tags` and `scripts`.
 - `content/cv/<name>.md`: `from`, optional `to`; body is one line.
 
-`status: draft` entries appear only in `npm run dev`. Slugs must be unique within the writing and til collections; the build fails otherwise. Dates default to the filename prefix.
+`status` can be `published`, `draft`, or `unlisted`. Drafts are only built and listed in `npm run dev`. Unlisted entries are built in production and can be visited by their direct URLs, but only appear in lists (including tags and RSS) in development. Draft and unlisted entries show a status badge in development only. Slugs must be unique within the writing and til collections; the build fails otherwise. Dates default to the filename prefix.
 
 Images go next to the markdown file. `![Caption](img.png "framed")` draws the hatched, pencil-framed figure.
 

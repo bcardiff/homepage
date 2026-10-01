@@ -3,6 +3,8 @@ import Base from "./Base.astro";
 import { site } from "../lib/site";
 import { renderInline } from "../lib/markdown/inline";
 import { isoDate, fmtLong } from "../lib/dates";
+import StatusBadge from "../components/StatusBadge.astro";
+import type { EntryStatus } from "../lib/status";
 
 interface Adjacent { url: string; title: string }
 interface Props {
@@ -14,17 +16,19 @@ interface Props {
   dek?: string;
   section: "writing" | "til";
   slug: string;
+  status: EntryStatus;
   prev?: Adjacent;
   next?: Adjacent;
   description?: string;
 }
-const { title, titleHtml, kind, date, tags, dek, section, slug, prev, next, description } = Astro.props;
+const { title, titleHtml, kind, date, tags, dek, section, slug, status, prev, next, description } = Astro.props;
 ---
 <Base page="article" section={section} title={title} description={description ?? dek}>
   <article id={`${section}-${slug}`}>
     <header>
       <div class="meta">
         <span>{kind} · <time datetime={isoDate(date)}>{fmtLong(date)}</time></span>
+        <StatusBadge status={status} />
         {tags.length > 0 && (
           <ul class="tags">{tags.map((t) => <li><a href={`/tags/${t}/`}>#{t}</a></li>)}</ul>
         )}

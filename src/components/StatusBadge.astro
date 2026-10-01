@@ -1,0 +1,7 @@
+---
+import type { EntryStatus } from "../lib/status";
+
+interface Props { status: EntryStatus }
+const { status } = Astro.props;
+---
+{import.meta.env.DEV && status !== "published" && <span class="status-badge">{status}</span>}

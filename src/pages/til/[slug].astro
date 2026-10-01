@@ -6,7 +6,7 @@ import { getTils, type Til } from "../../lib/collections";
 import { renderInline, plainText } from "../../lib/markdown/inline";
 
 export async function getStaticPaths() {
-  const tils = (await getTils()).filter((t) => t.note !== null);
+  const tils = (await getTils({ includeUnlisted: true })).filter((t) => t.note !== null || t.data.status === "unlisted");
   return tils.map((til) => ({ params: { slug: til.data.slug }, props: { til } }));
 }
 
@@ -22,6 +22,7 @@ const { Content } = await render(til);
   tags={til.data.tags}
   section="til"
   slug={til.data.slug}
+  status={til.data.status}
 >
   <PostScripts filePath={til.filePath} scripts={til.data.scripts} />
   <Content />

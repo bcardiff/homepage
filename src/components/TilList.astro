@@ -4,6 +4,7 @@ import { renderInline } from "../lib/markdown/inline";
 import { chevronSvg } from "../lib/markdown/svg";
 import { variant } from "../lib/hash";
 import { isoDate, fmtFull } from "../lib/dates";
+import StatusBadge from "./StatusBadge.astro";
 
 interface Props { tils: Til[] }
 const { tils } = Astro.props;
@@ -16,6 +17,8 @@ const { tils } = Astro.props;
         <Fragment set:html={chevronSvg(variant(t.line))} />
         <p>
           <Fragment set:html={renderInline(t.line)} />
+          {" "}
+          <StatusBadge status={t.data.status} />
           {" "}
           <a class="permalink squig" data-squig={variant(date)} href={t.url}><time datetime={isoDate(t.date)}>{date}</time></a>
         </p>

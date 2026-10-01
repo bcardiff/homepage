@@ -1,12 +1,13 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { entryStatuses } from "./lib/status";
 
 /** Keep the filename stem as the id, so two files with the same `slug` are both loaded and can be reported. */
 const stem = ({ entry }: { entry: string }) => entry.replace(/\.md$/, "");
 
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "slug must be lowercase kebab-case");
-const status = z.enum(["draft", "published"]);
+const status = z.enum(entryStatuses);
 const tags = z.array(z.string().regex(/^[a-z0-9-]+$/, "tags must be lowercase kebab-case")).default([]);
 /** Third party URLs, or paths to `.js`/`.ts` files relative to the Markdown file. */
 const scripts = z.array(z.string()).default([]);
