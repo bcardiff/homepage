@@ -134,7 +134,6 @@ build-depends:
 default-language: GHC2024
 default-extensions:
     QuasiQuotes
-    DeriveGeneric
 ```
 
 ```haskell
