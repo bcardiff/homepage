@@ -7,7 +7,7 @@ tags: [haskell, json]
 dek: Manage malformed JSON in Haskell
 ---
 
-Sometimes we need to make systems talk to each other. Each peer assumes the other's format. Althought there is documentation and tooling to reduce the changes of disagreement they might still happen. An assumption when the code written might not longer hold. This is a small take on how we can manage that situation when using Haskell and [Aeson](https://hackage.haskell.org/package/aeson).
+Sometimes we need to make systems talk to each other. Each peer assumes the other's format. Althought there is documentation and tooling to reduce the changes of disagreement they might still happen. An assumption when the code was written might no longer hold. This is a small take on how we can manage that situation when using Haskell and [Aeson](https://hackage.haskell.org/package/aeson).
 
 Our case study is interacting with an endpoint that returns a list of items. As can be found in some pagination API.
 
