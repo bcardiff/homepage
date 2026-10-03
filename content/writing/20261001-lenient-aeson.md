@@ -7,7 +7,7 @@ tags: [haskell, json]
 dek: Manage malformed JSON in Haskell
 ---
 
-Sometimes we need to make systems talk to each other. Each peer assumes the other's format. Althought there is documentation and tooling to reduce the changes of disagreement they might still happen. An assumption when the code was written might no longer hold. This is a small take on how we can manage that situation when using Haskell and [Aeson](https://hackage.haskell.org/package/aeson).
+Sometimes we need to make systems talk to each other. Each peer assumes the other's format. Although there is documentation and tooling to reduce the chances of disagreement they might still happen. An assumption when the code was written might no longer hold. This is a small take on how we can manage that situation when using Haskell and [Aeson](https://hackage.haskell.org/package/aeson).
 
 Our case study is interacting with an endpoint that returns a list of items. As can be found in some pagination API.
 
@@ -76,7 +76,7 @@ A couple of alternatives at hand would be
 - To define `name` and/or `id` as `Maybe`s. 
 - To define `Page` as `items :: [Data.Aeson.Value]`.
 
-But I think we can do something more ergonmic. Define a `Lenient` type that will allow us to control boundaries for where the parsing can go wrong.
+But I think we can do something more ergonomic. Define a `Lenient` type that will allow us to control boundaries for where the parsing can go wrong.
 
 ```haskell
 data Page = Page {items :: [Lenient Item]}
@@ -95,7 +95,7 @@ instance (ToJSON a) => ToJSON (Lenient a) where
 With that, any parsing error within an item will not break the whole page.
 We can still get errors when parsing a page if its schema change (eg: `items` not being a list). 
 
-All in all we are indicating **where we can to tolerate parsing errors**. We are able to recover the original value, the parsing error withing the context: the 3rd items is malformed.
+All in all we are indicating **where we can to tolerate parsing errors**. We are able to recover the original value, the parsing error within the context: the 3rd items is malformed.
 
 So when parsing an invalid page, instead of an error "expected String, but encountered Null" for the whole page, we will now get a hopefully more useful value.
 
